@@ -1,0 +1,542 @@
+.parametres-container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* En-tête */
+.header {
+  background-color: white;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.ins-logo {
+  height: 60px;
+  margin-right: 15px;
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.ar-text {
+  font-size: 22px;
+  color: #003366;
+  font-weight: bold;
+}
+
+.fr-text {
+  font-size: 14px;
+  color: #666;
+}
+
+.enquetes-banner {
+  background-color: #003366;
+  color: white;
+  padding: 5px 15px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+/* Navigation */
+.main-nav {
+  background-color: #003366;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.main-nav ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.main-nav li {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.main-nav li.right-item {
+  margin-left: auto;
+}
+
+.main-nav a {
+  display: block;
+  color: white;
+  padding: 15px 20px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
+  font-weight: 500;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.main-nav a:before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background-color: rgba(255, 255, 255, 0.2);
+  transition: height 0.3s ease;
+  z-index: -1;
+}
+
+.main-nav a:hover:before {
+  height: 100%;
+}
+
+.main-nav li.active a {
+  color: white;
+  font-weight: 600;
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.main-nav li.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: #4CAF50;
+}
+
+.main-nav li.right-item a {
+  background-color: rgba(220, 53, 69, 0.7);
+  color: white;
+  border-radius: 4px;
+  margin: 8px 15px;
+  padding: 7px 15px;
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.main-nav li.right-item a:hover {
+  background-color: rgba(220, 53, 69, 0.9);
+  transform: scale(1.05);
+}
+
+/* Bannière */
+.banner {
+  background-color: #e9ecef;
+  padding: 40px 20px;
+  text-align: center;
+  background-image: repeating-linear-gradient(45deg, rgba(0, 51, 102, 0.02) 0px, rgba(0, 51, 102, 0.02) 2px, transparent 2px, transparent 4px);
+  background-blend-mode: overlay;
+  position: relative;
+}
+
+.banner h1 {
+  color: #003366;
+  font-size: 28px;
+  font-weight: bold;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* Zone de contenu */
+.content-area {
+  display: flex;
+  padding: 30px;
+  gap: 30px;
+  flex: 1;
+  justify-content: center;
+}
+
+.settings-container {
+  width: 100%;
+  max-width: 800px;
+}
+
+.settings-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 25px;
+  margin-bottom: 20px;
+}
+
+.settings-card h2 {
+  color: #003366;
+  font-size: 22px;
+  margin-top: 0;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.setting-group {
+  margin-bottom: 25px;
+}
+
+.setting-group h3 {
+  font-size: 18px;
+  margin-bottom: 15px;
+  color: #444;
+}
+
+/* Sélecteur de thèmes */
+.theme-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.theme-card {
+  width: 120px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+
+.theme-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.theme-card.active {
+  border-color: #4CAF50;
+}
+
+.theme-preview {
+  height: 100px;
+  background-color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.preview-navbar {
+  height: 20%;
+  background-color: #003366;
+}
+
+.preview-banner {
+  height: 30%;
+  background-color: #e9ecef;
+}
+
+.preview-content {
+  height: 50%;
+  background-color: #f5f5f5;
+}
+
+.theme-name {
+  text-align: center;
+  padding: 8px;
+  background-color: #f8f8f8;
+  font-size: 14px;
+}
+
+/* Sélecteurs de couleur */
+.color-pickers {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.color-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.color-picker label {
+  font-size: 14px;
+  color: #666;
+}
+
+.color-picker input[type="color"] {
+  height: 40px;
+  cursor: pointer;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+/* Options d'affichage */
+.display-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.option {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.option label {
+  font-size: 14px;
+  color: #666;
+}
+
+.option select {
+  height: 40px;
+  padding: 0 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: white;
+}
+
+.option input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+/* Boutons d'action */
+.setting-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.btn-save, .btn-reset {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.btn-save {
+  background-color: #003366;
+  color: white;
+  flex: 3;
+}
+
+.btn-save:hover {
+  background-color: #002244;
+}
+
+.btn-reset {
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  color: #666;
+  flex: 1;
+}
+
+.btn-reset:hover {
+  background-color: #eee;
+}
+
+/* Pied de page */
+footer {
+  background-color: #003366;
+  color: white;
+  padding: 15px;
+  text-align: center;
+  margin-top: auto;
+}
+
+.footer-content p {
+  margin: 0;
+}
+
+/* Style pour le mode contraste élevé */
+.high-contrast {
+  --text-color: white;
+  --bg-color: black;
+  --accent-color: yellow;
+}
+
+.high-contrast .settings-card {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.high-contrast h2, .high-contrast h3 {
+  color: var(--accent-color);
+}
+
+.high-contrast label {
+  color: var(--text-color);
+}
+
+/* Styles pour différentes tailles de police */
+.font-small {
+  font-size: 0.85em;
+}
+
+.font-medium {
+  font-size: 1em;
+}
+
+.font-large {
+  font-size: 1.15em;
+}
+
+/* Styles pour les notifications */
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  max-width: 350px;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  transition: all 0.3s ease;
+  animation: slideIn 0.3s forwards;
+}
+
+.notification.success {
+  background-color: #d4edda;
+  color: #155724;
+  border-left: 4px solid #28a745;
+}
+
+.notification.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border-left: 4px solid #dc3545;
+}
+
+.notification-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.notification-message {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.notification-close {
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: 1.2rem;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.notification-close:hover {
+  opacity: 1;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Styles pour la boîte de dialogue de confirmation */
+.confirm-dialog-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1100;
+  animation: fadeIn 0.2s forwards;
+}
+
+.confirm-dialog {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  width: 400px;
+  max-width: 90%;
+  overflow: hidden;
+  animation: scaleIn 0.3s forwards;
+}
+
+.confirm-dialog-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.confirm-dialog-header h3 {
+  margin: 0;
+  color: var(--title-color);
+  font-size: 1.2rem;
+}
+
+.confirm-dialog-content {
+  padding: 20px;
+}
+
+.confirm-dialog-content p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #555;
+}
+
+.confirm-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px 20px;
+  border-top: 1px solid #eee;
+  gap: 10px;
+}
+
+.btn-cancel {
+  padding: 8px 16px;
+  background-color: #f8f9fa;
+  color: #212529;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-cancel:hover {
+  background-color: #e9ecef;
+}
+
+.btn-confirm {
+  padding: 8px 16px;
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-confirm:hover {
+  filter: brightness(90%);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}

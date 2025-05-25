@@ -1,0 +1,127 @@
+<!-- demande-information.component.html - avec IA intégrée -->
+<div class="info-request-container">
+  <div class="header-section">
+    <h1>Demande d'information</h1>
+    <p>Sélectionnez le domaine qui vous intéresse et posez votre question - notre IA vous répondra instantanément !</p>
+  </div>
+
+  <!-- Grille de cartes colorées -->
+  <div class="info-cards-grid">
+    <div 
+      *ngFor="let card of infoCards"
+      class="info-card"
+      [style.background-color]="card.color"
+      [class.selected]="selectedCardId === card.id"
+      (click)="selectCard(card.id)"
+    >
+      <div class="card-icon">
+        <i class="fas {{ card.icon }}"></i>
+      </div>
+      <h3>{{ card.title }}</h3>
+      <div *ngIf="selectedCardId === card.id" class="selected-indicator">
+        <i class="fas fa-check-circle"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section contact direct -->
+  <div class="direct-question-section">
+    <div class="section-divider">
+      <span>{{ selectedCardId ? 'Posez votre question sur ce domaine' : 'ou posez votre question directement' }}</span>
+    </div>
+
+    <h2>{{ selectedCardId ? 'Question avec assistance IA' : 'Posez votre question directement' }}</h2>
+
+    <!-- Réponse de l'IA -->
+    <div *ngIf="showAIResponse && !isLoadingAI" class="ai-response-bubble">
+      <div class="ai-header">
+        <div class="ins-logo">
+          <i class="fas fa-chart-bar"></i>
+          <span>Assistant IA - INS Tunisie</span>
+        </div>
+        <button class="close-btn" (click)="closeAIResponse()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="ai-content">
+        <p>{{ aiResponse }}</p>
+      </div>
+      <div class="ai-actions">
+        <button class="secondary-btn" (click)="askNewQuestion()">
+          <i class="fas fa-plus"></i>
+          Nouvelle question
+        </button>
+        <a href="tel:+21671891002" class="contact-btn">
+          <i class="fas fa-phone"></i>
+          Contacter l'INS
+        </a>
+      </div>
+    </div>
+
+    <!-- Loading IA -->
+    <div *ngIf="isLoadingAI" class="ai-loading">
+      <div class="loading-animation">
+        <div class="loading-dots">
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+        </div>
+        <p>L'IA analyse votre question...</p>
+      </div>
+    </div>
+
+    <!-- Message de succès classique -->
+    <div *ngIf="formSubmitted && !selectedCardId && !showAIResponse" class="success-message">
+      <i class="fas fa-check-circle"></i>
+      <span>Merci pour votre question ! Nous vous répondrons très bientôt.</span>
+    </div>
+
+    <!-- Formulaire -->
+    <form *ngIf="!formSubmitted || showAIResponse" [formGroup]="contactForm" (ngSubmit)="submitQuestion()" class="question-form">
+      <div class="form-field">
+        <input 
+          type="email"
+          formControlName="email"
+          placeholder="Votre email"
+          [ngClass]="{'invalid': contactForm.get('email')?.invalid && contactForm.get('email')?.touched}"
+        >
+      </div>
+
+      <div class="form-field">
+        <textarea 
+          formControlName="question"
+          [placeholder]="selectedCardId ? 'Posez votre question sur ce domaine, notre IA vous répondra...' : 'Votre question...'"
+          rows="3"
+          [ngClass]="{'invalid': contactForm.get('question')?.invalid && contactForm.get('question')?.touched}"
+        ></textarea>
+      </div>
+
+      <button type="submit" [disabled]="contactForm.invalid || isLoadingAI" class="submit-btn">
+        <i class="fas {{ selectedCardId ? 'fa-robot' : 'fa-paper-plane' }}"></i>
+        {{ selectedCardId ? 'Demander à l\'IA' : 'Envoyer' }}
+      </button>
+    </form>
+
+    <!-- Indication domaine sélectionné -->
+    <div *ngIf="selectedCardId" class="selected-domain-info">
+      <i class="fas fa-info-circle"></i>
+      <span>Domaine sélectionné: {{ getSelectedCardTitle() }}</span>
+    </div>
+  </div>
+
+  <!-- Footer avec contacts rapides -->
+  <div class="quick-contacts">
+    <div class="contact-item">
+      <i class="fas fa-phone"></i>
+      <span>+216 71 891 002</span>
+    </div>
+    <div class="contact-item">
+      <i class="fas fa-envelope"></i>
+      <span>contact{{ '@' }}ins.tn</span>
+    </div>
+    <div class="contact-item">
+      <i class="fas fa-robot"></i>
+      <span>Assistant IA disponible 24h/24</span>
+    </div>
+  </div>
+</div>

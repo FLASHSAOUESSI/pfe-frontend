@@ -1,0 +1,51 @@
+<div class="resultats-container">
+  <!-- En-tête -->
+  <header class="header">
+    <div class="logo-container">
+      <img src="assets/images/ins-logo.png" alt="Logo INS" class="ins-logo">
+      <div class="logo-text">
+        <span class="ar-text">إحصائيات تونس</span>
+        <span class="fr-text">STATISTIQUES TUNISIE</span>
+      </div>
+    </div>
+    <div class="enquetes-banner">ENQUÊTES EN LIGNE</div>
+  </header>
+
+  <!-- Menu de navigation -->
+  <nav class="main-nav">
+    <ul>
+      <li><a routerLink="/accueil">Accueil</a></li>
+      <li class="active"><a routerLink="/resultats">Résultats</a></li>
+      <li><a routerLink="/demande-information">Demande d'information</a></li>
+      <li><a routerLink="/contact">Contact</a></li>
+      <li><a routerLink="/parametres">Paramètres</a></li>
+      <li class="right-item"><a routerLink="/login" (click)="logout()">Déconnexion</a></li>
+    </ul>
+  </nav>
+
+  <!-- Contenu principal -->
+  <main>
+    <div class="banner">
+      <h1>RÉSULTATS DES ENQUÊTES</h1>
+    </div>
+
+    <div class="content-area">
+      <div class="pdf-viewer">
+        <div class="pdf-container">
+          <div class="pdf-placeholder">
+            <i class="pdf-icon">📄</i>
+            <p>Aucun résultat disponible pour le moment.</p>
+            <p>Veuillez réessayer ultérieurement.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Pied de page -->
+  <footer>
+    <div class="footer-content">
+      <p>&copy; INS 2023 - Tous droits réservés</p>
+    </div>
+  </footer>
+</div>

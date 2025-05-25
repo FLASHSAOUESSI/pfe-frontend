@@ -1,0 +1,75 @@
+<div class="accueil-container">
+    <!-- En-tête -->
+    <header class="header">
+      <div class="logo-container">
+        <img src="assets/images/ins-logo.png" alt="Logo INS" class="ins-logo">
+        <div class="logo-text">
+          <span class="ar-text">إحصائيات تونس</span>
+          <span class="fr-text">STATISTIQUES TUNISIE</span>
+        </div>
+      </div>
+      <div class="enquetes-banner">ENQUÊTES EN LIGNE</div>
+    </header>
+  
+    <!-- Menu de navigation -->
+    <nav class="main-nav">
+        <ul>
+          <li class="active"><a routerLink="/accueil">Accueil</a></li>
+          <li><a routerLink="/resultats">Résultats</a></li>
+          <li><a routerLink="/demande-information">Demande d'information</a></li>
+          <li><a routerLink="/contact">Contact</a></li>
+          <li><a routerLink="/parametres">Paramètres</a></li>
+          <li class="right-item"><a routerLink="/login" (click)="logout()">Déconnexion</a></li>
+        </ul>
+      </nav>
+  
+    <!-- Contenu principal -->
+    <main>
+      <div class="banner">
+        <h1>SITUATION ET PERSPECTIVES DES ENTREPRISES INDUSTRIELLES</h1>
+      </div>
+  
+      <div class="content-area">
+        <div class="sidebar">
+          <div class="sidebar-box">
+            <h3>Saisie questionnaire</h3>
+            <div class="trimester-select">
+              <select class="form-control">
+                <option>1er Trimestre 2023</option>
+                <option>2ème Trimestre 2023</option>
+                <option>3ème Trimestre 2023</option>
+                <option>4ème Trimestre 2023</option>
+              </select>
+            </div>
+           <button class="btn-action" (click)="goToEnquete()">Commencer</button>
+          </div>
+        </div>
+  
+        <div class="main-content">
+          <div class="content-box">
+            <h2>PRESENTATION</h2>
+            <div class="text-content">
+              <p>Les enquêtes d'opinion jouent un rôle important dans le suivi de la conjoncture économique et l'appréciation de la situation économique et de son évolution. C'est dans ce cadre que l'INS a lancé une enquête d'opinion trimestrielle auprès des chefs d'entreprises commerciales.</p>
+              
+              <p>Dans ce cadre, l'objectif de l'enquête d'opinion sur la situation et les perspectives des entreprises du commerce de détail est d'apporter des informations rapides pour l'analyse de la conjoncture et la prévision à court terme. Cette enquête aura une périodicité trimestrielle et servira pour l'établissement du diagnostic conjoncturel de l'activité du secteur commercial en disposant d'une appréciation qualitative sur la situation récente de l'activité commerciale (les trois derniers mois) et sur son évolution à court terme (trois prochains mois).</p>
+              
+              <p>Cette enquête de conjoncture constituera une base pour le suivi de la demande intérieur et plus particulièrement la consommation des ménages.</p>
+              
+              <p>Le champ de l'enquête couvre le commerce des biens destinés à la consommation des ménages. Certaines activités de commerce de détail sont exclues du champ de l'enquête, comme le commerce de détail du tabac qui est une activité non conjoncturelle, le commerce de détail hors magasin ne disposant pas de local fixe (marchands ambulants, souk) et le commerce de détail des biens d'occasion.</p>
+              
+              <p>Les activités du commerce du détail sont représentées dans la Nomenclature des Activités Tunisiennes (NAT) par les codes allant de 501 jusqu'à 505 pour les activités de commerce de détail d'automobile et allant de 521 jusqu'à 524 pour le reste des activités de commerce de détail.</p>
+              
+              <p>Les sous-classes du groupe 524 sont regroupées de façon à former trois secteurs différents au niveau agrégé.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  
+    <!-- Pied de page -->
+    <footer>
+      <div class="footer-content">
+        <p>&copy; INS 2023 - Tous droits réservés</p>
+      </div>
+    </footer>
+  </div>

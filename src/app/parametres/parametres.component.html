@@ -1,0 +1,133 @@
+<div class="parametres-container">
+  <!-- En-tête -->
+  <header class="header">
+    <div class="logo-container">
+      <img src="assets/images/ins-logo.png" alt="Logo INS" class="ins-logo">
+      <div class="logo-text">
+        <span class="ar-text">إحصائيات تونس</span>
+        <span class="fr-text">STATISTIQUES TUNISIE</span>
+      </div>
+    </div>
+    <div class="enquetes-banner">ENQUÊTES EN LIGNE</div>
+  </header>
+
+  <!-- Menu de navigation -->
+  <nav class="main-nav" [style.background-color]="currentTheme.navbarColor">
+    <ul>
+      <li><a routerLink="/accueil">Accueil</a></li>
+      <li><a routerLink="/resultats">Résultats</a></li>
+      <li><a routerLink="/demande-information">Demande d'information</a></li>
+      <li><a routerLink="/contact">Contact</a></li>
+      <li class="active"><a routerLink="/parametres">Paramètres</a></li>
+      <li class="right-item"><a routerLink="/login" (click)="logout()">Déconnexion</a></li>
+    </ul>
+  </nav>
+
+  <!-- Notification -->
+  <div *ngIf="notification.show" class="notification" [ngClass]="notification.type">
+    <div class="notification-content">
+      <span class="notification-message">{{ notification.message }}</span>
+      <button class="notification-close" (click)="hideNotification()">×</button>
+    </div>
+  </div>
+
+  <!-- Contenu principal -->
+  <main>
+    <div class="banner" [style.background-color]="currentTheme.bannerColor">
+      <h1 [style.color]="currentTheme.titleColor">PARAMÈTRES</h1>
+    </div>
+
+    <div class="content-area">
+      <div class="settings-container">
+        <div class="settings-card">
+          <h2>Personnalisation de l'interface</h2>
+          
+          <div class="setting-group">
+            <h3>Thèmes</h3>
+            <div class="theme-selector">
+              <div class="theme-card" 
+                *ngFor="let theme of themes" 
+                [ngClass]="{'active': selectedTheme === theme.name}"
+                (click)="selectTheme(theme)">
+                <div class="theme-preview">
+                  <div class="preview-navbar" [style.background-color]="theme.navbarColor"></div>
+                  <div class="preview-banner" [style.background-color]="theme.bannerColor"></div>
+                  <div class="preview-content"></div>
+                </div>
+                <div class="theme-name">{{theme.label}}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="setting-group">
+            <h3>Couleurs personnalisées</h3>
+            <div class="color-pickers">
+              <div class="color-picker">
+                <label>Couleur de la barre de navigation</label>
+                <input type="color" [(ngModel)]="customColors.navbarColor" (change)="applyCustomColors()">
+              </div>
+              <div class="color-picker">
+                <label>Couleur de la bannière</label>
+                <input type="color" [(ngModel)]="customColors.bannerColor" (change)="applyCustomColors()">
+              </div>
+              <div class="color-picker">
+                <label>Couleur des titres</label>
+                <input type="color" [(ngModel)]="customColors.titleColor" (change)="applyCustomColors()">
+              </div>
+              <div class="color-picker">
+                <label>Couleur des boutons</label>
+                <input type="color" [(ngModel)]="customColors.buttonColor" (change)="applyCustomColors()">
+              </div>
+            </div>
+          </div>
+
+          <div class="setting-group">
+            <h3>Options d'affichage</h3>
+            <div class="display-options">
+              <div class="option">
+                <label>Taille de police</label>
+                <select [(ngModel)]="displayOptions.fontSize" (change)="applyDisplayOptions()">
+                  <option value="small">Petite</option>
+                  <option value="medium">Moyenne</option>
+                  <option value="large">Grande</option>
+                </select>
+              </div>
+              <div class="option">
+                <label>Mode contraste élevé</label>
+                <input type="checkbox" [(ngModel)]="displayOptions.highContrast" (change)="applyDisplayOptions()">
+              </div>
+            </div>
+          </div>
+
+          <div class="setting-actions">
+            <button class="btn-save" (click)="saveSettings()" [style.background-color]="currentTheme.buttonColor">Enregistrer les paramètres</button>
+            <button class="btn-reset" (click)="resetSettings()">Réinitialiser</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Boîte de dialogue de confirmation -->
+  <div *ngIf="confirmDialog.show" class="confirm-dialog-backdrop">
+    <div class="confirm-dialog">
+      <div class="confirm-dialog-header">
+        <h3>{{ confirmDialog.title }}</h3>
+      </div>
+      <div class="confirm-dialog-content">
+        <p>{{ confirmDialog.message }}</p>
+      </div>
+      <div class="confirm-dialog-actions">
+        <button class="btn-cancel" (click)="onConfirmCancel()">Annuler</button>
+        <button class="btn-confirm" (click)="onConfirmConfirm()">Confirmer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pied de page -->
+  <footer [style.background-color]="currentTheme.navbarColor">
+    <div class="footer-content">
+      <p>&copy; INS 2023 - Tous droits réservés</p>
+    </div>
+  </footer>
+</div>

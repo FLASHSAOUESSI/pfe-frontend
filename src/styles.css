@@ -1,1 +1,50 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
+@import './app/styles/theme-variables.css';
+
+/* Styles globaux */
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Styles pour différentes tailles de police */
+body.font-small {
+  font-size: 0.85em;
+}
+
+body.font-medium {
+  font-size: 1em;
+}
+
+body.font-large {
+  font-size: 1.15em;
+}
+
+/* Styles pour le mode contraste élevé */
+body.high-contrast {
+  --text-color: white;
+  --bg-color: black;
+  --accent-color: yellow;
+  color: var(--text-color);
+  background-color: var(--bg-color);
+}
+
+body.high-contrast .content-box,
+body.high-contrast .settings-card,
+body.high-contrast .sidebar-box {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  border: 1px solid var(--accent-color);
+}
+
+body.high-contrast h1, 
+body.high-contrast h2, 
+body.high-contrast h3 {
+  color: var(--accent-color) !important;
+}
+
+body.high-contrast a {
+  color: var(--accent-color);
+}

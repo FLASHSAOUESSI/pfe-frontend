@@ -1,0 +1,207 @@
+  /* register.component.css */
+  :root {
+    --ins-primary: #003579;     /* Bleu principal INS */
+    --ins-secondary: #0056b3;   /* Bleu secondaire */
+    --ins-light: #f0f6ff;      /* Bleu clair */
+    --ins-error: #dc3545;
+    --ins-success: #28a745;
+  }
+  
+  .page-container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--ins-primary) 0%, var(--ins-secondary) 100%);
+    padding: 40px 20px;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .register-container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    padding: 40px;
+    animation: fadeIn 0.5s ease-out;
+  }
+  
+  .register-header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 3px solid var(--ins-primary);
+  }
+  
+  .ins-logo {
+    max-width: 180px;
+    height: auto;
+    margin-bottom: 20px;
+  }
+  
+  .register-header h2 {
+    color: var(--ins-primary);
+    font-size: 24px;
+    margin: 0 0 10px 0;
+  }
+  
+  .subtitle {
+    color: #666;
+    font-size: 16px;
+    margin: 0;
+  }
+  
+  .form-section {
+    background: var(--ins-light);
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 30px;
+    border-left: 4px solid var(--ins-primary);
+  }
+  
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 25px;
+    color: var(--ins-primary);
+  }
+  
+  .section-header i {
+    font-size: 24px;
+  }
+  
+  .section-header h3 {
+    margin: 0;
+    font-size: 20px;
+  }
+  
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    color: var(--ins-primary);
+    font-weight: 500;
+  }
+  
+  label i {
+    color: var(--ins-secondary);
+    font-size: 14px;
+  }
+  
+  .form-control {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e1e8f5;
+    border-radius: 10px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+  }
+  
+  .form-control:focus {
+    border-color: var(--ins-secondary);
+    box-shadow: 0 0 0 3px rgba(0, 53, 121, 0.1);
+    outline: none;
+  }
+  
+  .form-control.is-invalid {
+    border-color: var(--ins-error);
+  }
+  
+  .invalid-feedback {
+    color: var(--ins-error);
+    font-size: 12px;
+    margin-top: 5px;
+  }
+  
+  .verification-section {
+    background: var(--ins-light);
+    border-radius: 15px;
+    padding: 30px;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .verification-content {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  .verification-text {
+    color: #666;
+    margin-bottom: 20px;
+  }
+  
+  .verification-code input {
+    text-align: center;
+    letter-spacing: 8px;
+    font-size: 24px;
+    font-weight: 600;
+    max-width: 200px;
+    margin: 0 auto;
+  }
+  
+  .btn-submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    max-width: 300px;
+    margin: 20px auto;
+    padding: 14px 28px;
+    background:  #508ecf;
+    color: black;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-submit:hover {
+    background: var(--ins-secondary);
+    transform: translateY(-1px);
+    box-shadow: 0 5px 15px rgba(0, 53, 121, 0.2);
+  }
+  
+  .btn-submit:active {
+    transform: translateY(0);
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @media (max-width: 768px) {
+    .register-container {
+      padding: 20px;
+    }
+  
+    .form-section {
+      padding: 20px;
+    }
+  
+    .form-grid {
+      grid-template-columns: 1fr;
+    }
+  
+    .ins-logo {
+      max-width: 150px;
+    }
+  
+    .register-header h2 {
+      font-size: 20px;
+  }
+}

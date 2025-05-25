@@ -1,0 +1,253 @@
+.accueil-container {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    background-color: #f5f5f5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* En-tête */
+  .header {
+    background-color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  
+  .logo-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .ins-logo {
+    height: 60px;
+    margin-right: 15px;
+  }
+  
+  .logo-text {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .ar-text {
+    font-size: 22px;
+    color: var(--title-color);
+    font-weight: bold;
+  }
+  
+  .fr-text {
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .enquetes-banner {
+    background-color: var(--navbar-color);
+    color: white;
+    padding: 5px 15px;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+  
+  /* Navigation */
+ /* Améliorations du menu de navigation */
+ .main-nav {
+    background-color: #003366;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .main-nav ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .main-nav li {
+    position: relative;
+    transition: all 0.3s ease;
+  }
+  
+  .main-nav li.right-item {
+    margin-left: auto;
+  }
+  
+  .main-nav a {
+    display: block;
+    color: white;
+    padding: 15px 20px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+    font-weight: 500; /* Texte plus gras pour meilleure visibilité */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); /* Ombre subtile pour améliorer la lisibilité */
+  }
+  
+  /* Effet de survol avec fond plus visible */
+  .main-nav a:before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background-color: rgba(255, 255, 255, 0.2); /* Plus visible */
+    transition: height 0.3s ease;
+    z-index: -1;
+  }
+  
+  .main-nav a:hover:before {
+    height: 100%;
+  }
+  
+  /* Élément actif bien visible */
+  .main-nav li.active a {
+    color: white;
+    font-weight: 600;
+    background-color: rgba(255, 255, 255, 0.15);
+  }
+  
+  .main-nav li.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: #4CAF50; /* Couleur vive pour l'indicateur */
+    animation: activeIndicator 0.5s forwards;
+  }
+  
+  /* Bouton déconnexion bien visible */
+  .main-nav li.right-item a {
+    background-color: rgba(220, 53, 69, 0.7); /* Rouge plus visible */
+    color: white;
+    border-radius: 4px;
+    margin: 8px 15px;
+    padding: 7px 15px;
+    font-weight: 600;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  }
+  
+  .main-nav li.right-item a:hover {
+    background-color: rgba(220, 53, 69, 0.9);
+    transform: scale(1.05);
+  }
+  
+  /* Bannière */
+  .banner {
+    background-color: #e9ecef;
+    padding: 40px 20px;
+    text-align: center;
+    background-image: repeating-linear-gradient(45deg, rgba(0, 51, 102, 0.02) 0px, rgba(0, 51, 102, 0.02) 2px, transparent 2px, transparent 4px);
+    background-blend-mode: overlay;
+    position: relative;
+  }
+  
+  .banner h1 {
+    color: #003366;
+    font-size: 28px;
+    font-weight: bold;
+    margin: 0;
+    position: relative;
+    z-index: 1;
+  }
+  
+  /* Zone de contenu */
+  .content-area {
+    display: flex;
+    padding: 30px;
+    gap: 30px;
+    flex: 1;
+  }
+  
+  .sidebar {
+    width: 250px;
+    flex-shrink: 0;
+  }
+  
+  .sidebar-box {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 20px;
+  }
+  
+  .sidebar-box h3 {
+    color: var(--title-color);
+    font-size: 18px;
+    margin-top: 0;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .trimester-select {
+    margin-bottom: 15px;
+  }
+  
+  .form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .btn-action {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s;
+  }
+  
+  .btn-action:hover {
+    background-color: #002244;
+  }
+  
+  .main-content {
+    flex: 1;
+  }
+  
+  .content-box {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 25px;
+  }
+  
+  .content-box h2 {
+    color: var(--title-color);
+    font-size: 22px;
+    margin-top: 0;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .text-content p {
+    line-height: 1.6;
+    margin-bottom: 15px;
+  }
+  
+  /* Pied de page */
+  footer {
+    background-color: #003366;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    margin-top: auto;
+  }
+  
+  .footer-content p {
+    margin: 0;
+    font-size: 14px;
+  }

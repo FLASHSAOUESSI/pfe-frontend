@@ -1,0 +1,14 @@
+/* Variables de couleurs basées sur le thème - seront modifiées dynamiquement */
+:root {
+  --navbar-color: #003366;
+  --banner-color: #e9ecef;
+  --title-color: #003366;
+  --button-color: #003366;
+}
+
+.theme-layout-container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}

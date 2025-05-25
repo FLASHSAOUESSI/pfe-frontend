@@ -1,0 +1,31 @@
+/* Variables de thème globales */
+:root {
+  --navbar-color: #003366;
+  --banner-color: #e9ecef;
+  --title-color: #003366;
+  --button-color: #003366;
+}
+
+/* Styles pour la barre de navigation */
+.main-nav {
+  background-color: var(--navbar-color) !important;
+}
+
+/* Styles pour les bannières */
+.banner {
+  background-color: var(--banner-color) !important;
+}
+
+.banner h1 {
+  color: var(--title-color) !important;
+}
+
+/* Styles pour les boutons */
+.btn-action, .btn-save {
+  background-color: var(--button-color) !important;
+}
+
+/* Styles pour le footer */
+footer {
+  background-color: var(--navbar-color) !important;
+} 

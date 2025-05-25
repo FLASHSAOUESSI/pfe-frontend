@@ -1,0 +1,226 @@
+ /* login.component.css */
+ :root {
+    --ins-blue: #003579;        /* Bleu principal INS Tunisie */
+    --ins-light-blue: #0056b3;  /* Bleu clair pour hover */
+    --ins-bg-blue: #f0f6ff;     /* Bleu très clair pour fond */
+    --ins-error: #dc3545;
+    
+  }
+  
+  .page-container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--ins-blue) 0%, var(--ins-light-blue) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .login-container {
+    width: 100%;
+    max-width: 420px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .login-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, var(--ins-blue), var(--ins-light-blue));
+  }
+  
+  .login-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  
+  .ins-logo {
+    max-width: 180px;
+    height: auto;
+    margin-bottom: 20px;
+  }
+  
+  .login-header h2 {
+    color: var(--ins-blue);
+    font-size: 24px;
+    margin: 0;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  
+  .login-subtitle {
+    color: #666;
+    font-size: 16px;
+    margin: 0;
+  }
+  
+  .form-group {
+    margin-bottom: 25px;
+  }
+  
+  label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--ins-blue);
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+  
+  label i {
+    color: var(--ins-light-blue);
+  }
+  
+  .form-control {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e1e8f5;
+    border-radius: 10px;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    background-color: #fff;
+  }
+  
+  .form-control:focus {
+    border-color: var(--ins-light-blue);
+    box-shadow: 0 0 0 4px rgba(0, 53, 121, 0.1);
+    outline: none;
+  }
+  
+  .form-control.is-invalid {
+    border-color: var(--ins-error);
+    background-color: #fff;
+  }
+  
+  .password-group {
+    position: relative;
+  }
+  
+  .show-password {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--ins-light-blue);
+    cursor: pointer;
+    padding: 5px;
+  }
+  
+  .show-password:hover {
+    color: var(--ins-blue);
+  }
+  
+  .invalid-feedback {
+    color: var(--ins-error);
+    font-size: 13px;
+    margin-top: 5px;
+  }
+  
+  .btn-primary {
+    width: 100%;
+    padding: 14px;
+    background: var(--ins-blue);
+    color: rgb(8, 8, 8);
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .btn-signup {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.3s;
+  }
+  
+  .btn-signup:hover {
+    background-color: #45a049;
+  }
+  
+  .login-options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .btn-primary:hover {
+    background: var(--ins-light-blue);
+    transform: translateY(-1px);
+    box-shadow: 0 5px 15px rgba(0, 53, 121, 0.2);
+  }
+  
+  .btn-primary:active {
+    transform: translateY(0);
+  }
+  
+  .login-options {
+    text-align: center;
+    margin-top: 25px;
+  }
+  
+  .forgot-password {
+    color: var(--ins-light-blue);
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.3s ease;
+  }
+  
+  .forgot-password:hover {
+    color: var(--ins-blue);
+    text-decoration: underline;
+  }
+  
+  @media (max-width: 480px) {
+    .login-container {
+      padding: 30px 20px;
+    }
+  
+    .ins-logo {
+      max-width: 150px;
+    }
+  
+    .login-header h2 {
+      font-size: 20px;
+    }
+  }
+  
+  /* Animation lors du chargement */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .login-container {
+    animation: fadeIn 0.6s ease-out;
+  }
+  

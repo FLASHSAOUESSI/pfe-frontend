@@ -1,0 +1,177 @@
+<!-- contact.component.html -->
+<div class="contact-container">
+  <div class="contact-header">
+    <h1>Contactez-nous</h1>
+    <div class="header-underline"></div>
+  </div>
+
+  <div class="contact-content">
+    <div class="contact-info-card">
+      <div class="card-header">
+        <h2>Institut National de la Statistique</h2>
+        <p class="subtitle">Au service des citoyens et des entreprises</p>
+      </div>
+      
+      <div class="info-section">
+        <div class="info-item">
+          <div class="icon-container">
+            <i class="fas fa-map-marker-alt"></i>
+          </div>
+          <div class="info-text">
+            <h3>Adresse</h3>
+            <p>70, Rue Ech-cham, BP 265 CEDEX Tunis</p>
+            <p>1080 Tunis, Tunisie</p>
+          </div>
+        </div>
+        
+        <div class="info-item">
+          <div class="icon-container">
+            <i class="fas fa-phone-alt"></i>
+          </div>
+          <div class="info-text">
+            <h3>Téléphone</h3>
+            <p>+216 71 891 002</p>
+          </div>
+        </div>
+        
+        <div class="info-item">
+          <div class="icon-container">
+            <i class="fas fa-fax"></i>
+          </div>
+          <div class="info-text">
+            <h3>Fax</h3>
+            <p>+216 71 792 559</p>
+          </div>
+        </div>
+        
+        <div class="info-item">
+          <div class="icon-container">
+            <i class="fas fa-envelope"></i>
+          </div>
+          <div class="info-text">
+            <h3>Email</h3>
+            <p><a href="mailto:contact@ins.tn">contact&#64;ins.tn</a></p>
+          </div>
+        </div>
+        
+        <div class="info-item">
+          <div class="icon-container">
+            <i class="fas fa-clock"></i>
+          </div>
+          <div class="info-text">
+            <h3>Horaires d'ouverture</h3>
+            <p>Lundi - Vendredi: 8h30 - 17h30</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="social-media">
+        <h3>Suivez-nous</h3>
+        <div class="social-icons">
+          <a href="#" class="social-icon" title="Facebook">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="#" class="social-icon" title="Twitter">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a href="#" class="social-icon" title="LinkedIn">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+          <a href="#" class="social-icon" title="YouTube">
+            <i class="fab fa-youtube"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="contact-form-card">
+      <h2>Envoyez-nous un message</h2>
+      
+      <div *ngIf="messageSent" class="alert alert-success">
+        <i class="fas fa-check-circle"></i> Votre message a été envoyé avec succès. Nous vous répondrons dans les plus brefs délais.
+      </div>
+      
+      <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="nom">Nom complet<span class="required">*</span></label>
+          <input 
+            type="text" 
+            id="nom" 
+            formControlName="nom" 
+            class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f['nom'].errors }"
+            placeholder="Entrez votre nom"
+          >
+          <div *ngIf="submitted && f['nom'].errors" class="invalid-feedback">
+            <div *ngIf="f['nom'].errors['required']">Le nom est requis</div>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="email">Email<span class="required">*</span></label>
+          <input 
+            type="email" 
+            id="email" 
+            formControlName="email" 
+            class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f['email'].errors }"
+            placeholder="Entrez votre email"
+          >
+          <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+            <div *ngIf="f['email'].errors['required']">L'email est requis</div>
+            <div *ngIf="f['email'].errors['email']">L'email n'est pas valide</div>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="sujet">Sujet<span class="required">*</span></label>
+          <input 
+            type="text" 
+            id="sujet" 
+            formControlName="sujet" 
+            class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f['sujet'].errors }"
+            placeholder="Entrez le sujet de votre message"
+          >
+          <div *ngIf="submitted && f['sujet'].errors" class="invalid-feedback">
+            <div *ngIf="f['sujet'].errors['required']">Le sujet est requis</div>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="message">Message<span class="required">*</span></label>
+          <textarea 
+            id="message" 
+            formControlName="message" 
+            class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f['message'].errors }"
+            rows="5"
+            placeholder="Entrez votre message"
+          ></textarea>
+          <div *ngIf="submitted && f['message'].errors" class="invalid-feedback">
+            <div *ngIf="f['message'].errors['required']">Le message est requis</div>
+            <div *ngIf="f['message'].errors['minlength']">Le message doit contenir au moins 10 caractères</div>
+          </div>
+        </div>
+        
+        <button type="submit" class="btn-submit">
+          <i class="fas fa-paper-plane"></i> Envoyer le message
+        </button>
+      </form>
+    </div>
+  </div>
+  
+  <div class="contact-map">
+    <h2>Nous localiser</h2>
+    <div class="map-container">
+      <!-- Insérez ici une carte Google Maps ou OpenStreetMap -->
+      <img src="assets/images/map-placeholder.jpg" alt="Carte de localisation de l'INS" class="map-image">
+      <div class="map-overlay">
+        <p>Pour afficher la carte interactive, cliquez ci-dessous</p>
+        <a href="https://goo.gl/maps/YOUR_LOCATION" target="_blank" class="btn-map">
+          <i class="fas fa-map-marked-alt"></i> Voir sur Google Maps
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
