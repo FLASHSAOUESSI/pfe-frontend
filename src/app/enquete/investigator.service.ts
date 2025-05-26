@@ -4,16 +4,13 @@ import { Observable } from 'rxjs';
 import { Investigator } from './enquete.component';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class InvestigateurService {
+  private readonly httpclient = inject(HttpClient);
+  private readonly API_URL = 'http://localhost:9090/api/responsables';
 
-  private readonly httpclient = inject(HttpClient)
-  private readonly API_URL= "http://localhost:9090/api/investigateurs"
-
-  findCurrentInvestiagor(): Observable<Investigator>{
-   return this.httpclient.get<Investigator>(`${this.API_URL}/me`)
+  findCurrentResponsable(): Observable<Investigator> {
+    return this.httpclient.get<Investigator>(`${this.API_URL}/me`);
   }
-
-
 }

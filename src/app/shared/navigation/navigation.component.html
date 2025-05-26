@@ -1,0 +1,47 @@
+<nav class="nav-container">
+  <div class="nav-content">
+    <div class="nav-logo">
+      <img src="assets/images/ins-logo.png" alt="INS Logo" />
+    </div>
+
+    <div class="nav-links">
+      <a routerLink="/accueil" routerLinkActive="active" class="nav-link"
+        >Accueil</a
+      >
+      <a routerLink="/enquete" routerLinkActive="active" class="nav-link"
+        >Enquêtes</a
+      >
+      <a routerLink="/resultats" routerLinkActive="active" class="nav-link"
+        >Résultats</a
+      >
+      <a routerLink="/parametres" routerLinkActive="active" class="nav-link"
+        >Paramètres</a
+      >
+      <a routerLink="/contact" routerLinkActive="active" class="nav-link"
+        >Contact</a
+      >
+      <a
+        routerLink="/demande-information"
+        routerLinkActive="active"
+        class="nav-link"
+        >Demande d'information</a
+      >
+
+      <!-- Admin link only visible for admin users -->
+      <a
+        *ngIf="isUserAdmin"
+        routerLink="/admin"
+        routerLinkActive="active"
+        class="nav-link admin-link"
+      >
+        Administration
+      </a>
+    </div>
+    <div *ngIf="userEmail" class="user-info">
+      <span class="user-email" [title]="userEmail">{{ userEmail }}</span>
+      <a (click)="logout()" class="nav-link" style="cursor: pointer"
+        >Déconnexion</a
+      >
+    </div>
+  </div>
+</nav>

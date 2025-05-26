@@ -1,0 +1,261 @@
+<!-- filepath: c:\Users\Mega-PC\Desktop\sawessi\pfe-frontend\src\app\admin\statistics-dashboard\statistics-dashboard.component.html -->
+<div class="stats-dashboard">
+  <div class="dashboard-header">
+    <h1 class="dashboard-title">Tableau de bord statistique</h1>
+    <p class="dashboard-description">
+      Analyse complète des données par gouvernorat
+    </p>
+  </div>
+
+  <!-- Loading and error messages -->
+  <div *ngIf="isLoading" class="loading-spinner">
+    <i class="fas fa-spinner fa-spin"></i> Chargement des statistiques...
+  </div>
+
+  <div *ngIf="error" class="error-message">
+    <i class="fas fa-exclamation-triangle"></i> {{ error }}
+  </div>
+
+  <!-- Consolidated Statistics Cards -->
+  <div *ngIf="consolidatedStats" class="stats-grid">
+    <div class="stat-card total">
+      <div class="stat-value">{{ consolidatedStats.totalEnterprises }}</div>
+      <div class="stat-label">Total des entreprises</div>
+    </div>
+    <div class="stat-card validated">
+      <div class="stat-value">{{ consolidatedStats.validatedEnterprises }}</div>
+      <div class="stat-label">
+        Entreprises validées ({{
+          calculatePercentage(
+            consolidatedStats.validatedEnterprises,
+            consolidatedStats.totalEnterprises
+          )
+        }}%)
+      </div>
+    </div>
+    <div class="stat-card pending">
+      <div class="stat-value">{{ consolidatedStats.pendingEnterprises }}</div>
+      <div class="stat-label">
+        Entreprises en attente ({{
+          calculatePercentage(
+            consolidatedStats.pendingEnterprises,
+            consolidatedStats.totalEnterprises
+          )
+        }}%)
+      </div>
+    </div>
+    <div class="stat-card rejected">
+      <div class="stat-value">{{ consolidatedStats.rejectedEnterprises }}</div>
+      <div class="stat-label">
+        Entreprises rejetées ({{
+          calculatePercentage(
+            consolidatedStats.rejectedEnterprises,
+            consolidatedStats.totalEnterprises
+          )
+        }}%)
+      </div>
+    </div>
+  </div>
+
+  <!-- Key Information Highlights -->
+  <div *ngIf="consolidatedStats" class="info-highlight">
+    <p>
+      <i class="fas fa-info-circle"></i> Il y a un total de
+      {{ consolidatedStats.totalGovernorates }} gouvernorats. Le taux de
+      croissance moyen est de
+      {{ consolidatedStats.averageGrowthRate | number : "1.1-1" }}%.
+    </p>
+  </div>
+
+  <!-- Status Distribution Chart -->
+  <div *ngIf="consolidatedStats" class="chart-container">
+    <div class="chart-header">
+      <h3 class="chart-title">Distribution par statut</h3>
+    </div>
+
+    <app-status-distribution-chart
+      [stats]="consolidatedStats"
+    ></app-status-distribution-chart>
+
+    <div class="percentage-bar-legend">
+      <div class="legend-item">
+        <div class="legend-color validated"></div>
+        <span
+          >Validées ({{
+            calculatePercentage(
+              consolidatedStats.validatedEnterprises,
+              consolidatedStats.totalEnterprises
+            )
+          }}%)</span
+        >
+      </div>
+      <div class="legend-item">
+        <div class="legend-color pending"></div>
+        <span
+          >En attente ({{
+            calculatePercentage(
+              consolidatedStats.pendingEnterprises,
+              consolidatedStats.totalEnterprises
+            )
+          }}%)</span
+        >
+      </div>
+      <div class="legend-item">
+        <div class="legend-color rejected"></div>
+        <span
+          >Rejetées ({{
+            calculatePercentage(
+              consolidatedStats.rejectedEnterprises,
+              consolidatedStats.totalEnterprises
+            )
+          }}%)</span
+        >
+      </div>
+    </div>
+
+    <div class="stats-grid" style="margin-top: 20px">
+      <div
+        *ngFor="let stat of objectToArray(consolidatedStats.statusDistribution)"
+        class="stat-card"
+      >
+        <div class="stat-value">{{ stat.value }}</div>
+        <div class="stat-label">{{ stat.key }}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Top Governorates -->
+  <h2 class="section-title">Top Gouvernorats</h2>
+
+  <div class="chart-container">
+    <div class="chart-header">
+      <h3 class="chart-title">Classement des gouvernorats</h3>
+      <div class="chart-controls">
+        <select [(ngModel)]="selectedMetric" (change)="onMetricChange()">
+          <option *ngFor="let option of metricOptions" [value]="option.value">
+            {{ option.label }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div *ngIf="isLoadingRankings" class="loading-spinner">
+      <i class="fas fa-spinner fa-spin"></i>
+    </div>
+
+    <div *ngIf="!isLoadingRankings && topGovernorates.length > 0">
+      <app-governorate-rankings-chart
+        [governorates]="topGovernorates"
+        [metricLabel]="getMetricLabel()"
+      >
+      </app-governorate-rankings-chart>
+    </div>
+
+    <ul
+      *ngIf="!isLoadingRankings && topGovernorates.length > 0"
+      class="ranking-list"
+    >
+      <li
+        *ngFor="let gov of topGovernorates; let i = index"
+        class="ranking-item"
+      >
+        <span class="ranking-position">{{ i + 1 }}</span>
+        <span class="ranking-name">{{ gov.name }}</span>
+        <span class="ranking-value">{{ gov.value }}</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Governorate Statistics Table -->
+  <h2 class="section-title">Statistiques par gouvernorat</h2>
+
+  <div *ngIf="isLoadingGovStats" class="loading-spinner">
+    <i class="fas fa-spinner fa-spin"></i>
+  </div>
+
+  <div
+    *ngIf="!isLoadingGovStats && governorateStats.length > 0"
+    class="chart-container"
+  >
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Gouvernorat</th>
+          <th>Total</th>
+          <th>Validées</th>
+          <th>En attente</th>
+          <th>Rejetées</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let gov of governorateStats">
+          <td>{{ gov.name }}</td>
+          <td>{{ gov.totalEnterprises }}</td>
+          <td>{{ gov.validatedEnterprises }}</td>
+          <td>{{ gov.pendingEnterprises }}</td>
+          <td>{{ gov.rejectedEnterprises }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Time Series Data -->
+  <h2 class="section-title">Évolution temporelle</h2>
+
+  <div *ngIf="isLoadingTimeSeries" class="loading-spinner">
+    <i class="fas fa-spinner fa-spin"></i>
+  </div>
+
+  <div
+    *ngIf="!isLoadingTimeSeries && timeSeries.length > 0"
+    class="chart-container"
+  >
+    <div class="chart-header">
+      <h3 class="chart-title">Croissance mensuelle</h3>
+    </div>
+
+    <app-time-series-chart [timeSeries]="timeSeries"></app-time-series-chart>
+
+    <!-- Time series data visualization -->
+    <div
+      class="stats-grid"
+      style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))"
+    >
+      <div *ngFor="let ts of timeSeries | slice : 0 : 8" class="stat-card">
+        <div class="stat-value">{{ ts.growthRate | number : "1.1-1" }}%</div>
+        <div class="stat-label">{{ ts.name }}</div>
+        <div class="trend-indicator">
+          <i [class]="getTrendIcon(ts.growthRate)"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Monthly Growth Rates -->
+  <div
+    *ngIf="consolidatedStats && consolidatedStats.monthlyGrowthRates"
+    class="chart-container"
+  >
+    <div class="chart-header">
+      <h3 class="chart-title">Croissance mensuelle nationale</h3>
+    </div>
+
+    <div
+      class="stats-grid"
+      style="grid-template-columns: repeat(auto-fill, minmax(120px, 1fr))"
+    >
+      <div
+        *ngFor="
+          let growth of objectToArray(consolidatedStats.monthlyGrowthRates)
+        "
+        class="stat-card"
+      >
+        <div class="stat-value">{{ growth.value | number : "1.1-1" }}%</div>
+        <div class="stat-label">{{ growth.key }}</div>
+        <div class="trend-indicator">
+          <i [class]="getTrendIcon(growth.value)"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
