@@ -9,11 +9,12 @@ import {
   EnterpriseStatus,
 } from '../models/enterprise.model';
 import { EnterpriseService } from '../services/enterprise.service';
+import { AdminNavbarComponent } from '../shared/admin-navbar/admin-navbar.component';
 
 @Component({
   selector: 'app-admin-panel',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule, AdminNavbarComponent],
   templateUrl: './admin-panel.component.html',
   styleUrls: ['./admin-panel.component.css'],
 })
@@ -31,13 +32,19 @@ export class AdminPanelComponent implements OnInit {
 
   // Status options for dropdown
   statusOptions = Object.values(EnterpriseStatus);
-
+  statusOptions2 = ['validated', 'pending', 'rejected'];
   constructor(
     private jwtService: JwtService,
     private enterpriseService: EnterpriseService,
     private route: ActivatedRoute
   ) {}
 
+
+statusTranslations: { [key: string]: string } = {
+  validated: 'Validé',
+  pending: 'En attente',
+  rejected: 'Rejeté'
+};
   ngOnInit(): void {
     this.isUserAdmin = this.jwtService.isAdmin();
     this.userEmail = this.jwtService.getUserEmail();

@@ -17,8 +17,9 @@
           <li class="active"><a routerLink="/accueil">Accueil</a></li>
           <li><a routerLink="/resultats">Résultats</a></li>
           <li><a routerLink="/demande-information">Demande d'information</a></li>
-          <li><a routerLink="/contact">Contact</a></li>
+          <li><a routerLink="/contact"> Contact</a> </li>
           <li><a routerLink="/parametres">Paramètres</a></li>
+          
           <li class="right-item"><a routerLink="/login" (click)="logout()">Déconnexion</a></li>
         </ul>
       </nav>
@@ -34,14 +35,16 @@
           <div class="sidebar-box">
             <h3>Saisie questionnaire</h3>
             <div class="trimester-select">
-              <select class="form-control">
-                <option>1er Trimestre 2023</option>
-                <option>2ème Trimestre 2023</option>
-                <option>3ème Trimestre 2023</option>
-                <option>4ème Trimestre 2023</option>
+              <h4>Type d'enquête</h4>
+              <select class="form-control" [(ngModel)]="selectedTypeId" (ngModelChange)="onTypeChange($event.toString())">
+                <option *ngFor="let type of types" [value]="type.id">
+                  {{ type.annee }}- {{ type.session }} - {{ type.periodicite }}  {{ type.statut === 'disable' ? '🚫' : '✅' }}
+                </option>
               </select>
             </div>
-           <button class="btn-action" (click)="goToEnquete()">Commencer</button>
+            <button class="btn-action" (click)="goToEnquete(selectedTypeId)" [disabled]="!selectedType || selectedType.statut === 'disable'">
+              Commencer
+            </button>
           </div>
         </div>
   
@@ -69,7 +72,7 @@
     <!-- Pied de page -->
     <footer>
       <div class="footer-content">
-        <p>&copy; INS 2023 - Tous droits réservés</p>
+        <p>&copy; INS 2025 - Tous droits réservés</p>
       </div>
     </footer>
   </div>

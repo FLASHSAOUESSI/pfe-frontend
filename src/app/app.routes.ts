@@ -12,6 +12,9 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { adminGuard } from './guards/admin.guard';
 import { ParametresComponent } from './parametres/parametres.component';
 import { ResultatsComponent } from './resultats/resultats.component';
+import { MessageManagementComponent } from './admin/message-management/message-management.component';
+import { EnqueteAnalysisComponent } from './admin/components/enquete-analysis/enquete-analysis.component';
+import { TypeEnqueteManagementComponent } from './admin/components/type-enquete-management/type-enquete-management.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent }, // ✅ Add route for login
@@ -30,7 +33,7 @@ export const routes: Routes = [
   },
   {
     path: 'admin/enquetes',
-    component: AdminPanelComponent,
+    component: EnqueteAnalysisComponent,
     canActivate: [adminGuard],
   },
   {
@@ -43,7 +46,16 @@ export const routes: Routes = [
     component: StatisticsDashboardComponent,
     canActivate: [adminGuard],
   },
-
+  {
+    path: 'admin/messages',
+    component: MessageManagementComponent,
+    canActivate: [adminGuard]
+  },
+  {
+    path: 'admin/type-enquete',
+    component: TypeEnqueteManagementComponent,
+    canActivate: [adminGuard],
+  },
   { path: 'accueil', component: AccueilComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' }, // Redirection par défaut
 

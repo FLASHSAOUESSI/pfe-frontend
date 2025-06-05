@@ -265,13 +265,24 @@
     border: 1px solid #ddd;
     border-radius: 4px;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: background 0.18s, border-color 0.18s, color 0.18s, font-weight 0.18s, font-size 0.18s;
+    background: #fff;
+    color: #1976d2;
+    font-size: 1em;
+    font-weight: 600;
   }
   
   .custom-radio input[type="radio"]:checked + label {
-    background-color: #003366;
-    color: white;
-    border-color: #003366;
+    background: #e3f0ff;
+    color: #003366;
+    border-color: #1976d2;
+    font-size: 1.08em;
+    font-weight: 700;
+  }
+  
+  .custom-radio label:hover {
+    border-color: #2196f3;
+    background: #f4f8fb;
   }
   
   /* Flèches pour les tendances */
@@ -307,13 +318,25 @@
     border: 2px solid #ddd;
     border-radius: 50%;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: background 0.18s, border-color 0.18s, color 0.18s, font-weight 0.18s, font-size 0.18s;
+    padding: 10px 15px;
+    background: #fff;
+    color: #1976d2;
+    font-size: 1em;
+    font-weight: 600;
   }
   
   .arrow-option input[type="radio"]:checked + label {
-    background-color: #003366;
-    color: white;
-    border-color: #003366;
+    background: #e3f0ff;
+    color: #003366;
+    border-color: #1976d2;
+    font-size: 1.08em;
+    font-weight: 700;
+  }
+  
+  .arrow-option label:hover {
+    border-color: #2196f3;
+    background: #f4f8fb;
   }
   
   .arrow-up i, .arrow-right i, .arrow-down i {
@@ -426,4 +449,19 @@
       flex-direction: column;
       gap: 10px;
     }
+  }
+
+  /* Styles pour les messages toast */
+  ::ng-deep .success-snackbar {
+    background-color: #4caf50;
+    color: white;
+  }
+
+  ::ng-deep .error-snackbar {
+    background-color: #f44336;
+    color: white;
+  }
+
+  ::ng-deep .mat-mdc-snack-bar-action {
+    color: white;
   }

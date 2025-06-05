@@ -27,6 +27,7 @@
               }
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/azure-blue.css",
               "@ngxpert/hot-toast/styles.css",
               "src/styles.css"
             ],
@@ -86,6 +87,7 @@
               }
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/azure-blue.css",
               "@ngxpert/hot-toast/styles.css",
               "src/styles.css"
             ],

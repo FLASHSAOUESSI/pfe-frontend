@@ -15,6 +15,7 @@ import {
 import { GovernorateRankingsChartComponent } from '../charts/governorate-rankings-chart/governorate-rankings-chart.component';
 import { StatusDistributionChartComponent } from '../charts/status-distribution-chart/status-distribution-chart.component';
 import { TimeSeriesChartComponent } from '../charts/time-series-chart/time-series-chart.component';
+import { AdminNavbarComponent } from '../shared/admin-navbar/admin-navbar.component';
 
 @Component({
   selector: 'app-statistics-dashboard',
@@ -27,6 +28,7 @@ import { TimeSeriesChartComponent } from '../charts/time-series-chart/time-serie
     GovernorateRankingsChartComponent,
     TimeSeriesChartComponent,
     NgApexchartsModule,
+    AdminNavbarComponent
   ],
   templateUrl: './statistics-dashboard.component.html',
   styleUrls: ['./statistics-dashboard.component.css'],

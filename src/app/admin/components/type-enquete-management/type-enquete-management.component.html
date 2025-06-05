@@ -1,0 +1,127 @@
+<div *ngIf="isUserAdmin; else notAdmin" class="admin-container">
+  <app-admin-navbar />
+  <div class="admin-content type-enquete-section">
+    <mat-card class="type-enquete-header">
+      <h2>Enquête</h2>
+     
+    </mat-card>
+
+    <mat-card class="add-type-card">
+      <form (ngSubmit)="addType()" class="add-type-form" autocomplete="off">
+        <mat-form-field appearance="outline">
+          <mat-label>Année</mat-label>
+          <input matInput type="number" [(ngModel)]="newAnnee" name="newAnnee" required>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Périodicité</mat-label>
+          <input matInput [(ngModel)]="newPeriodicite" name="newPeriodicite" required>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Session</mat-label>
+          <input matInput [(ngModel)]="newSession" name="newSession" required>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Statut</mat-label>
+          <mat-select [(ngModel)]="newStatut" name="newStatut">
+            <mat-option value="enable">Activé</mat-option>
+            <mat-option value="disable">Désactivé</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!newAnnee || !newPeriodicite.trim() || !newSession.trim()">Ajouter</button>
+      </form>
+    </mat-card>
+
+    <mat-card class="type-table-card">
+      <div *ngIf="isLoading" class="loading-spinner">
+        <mat-spinner diameter="32"></mat-spinner>
+      </div>
+      <div *ngIf="!isLoading && types.length === 0" class="no-data-message">
+        Aucun type d'enquête pour le moment.
+      </div>
+      <table *ngIf="!isLoading && types.length > 0" mat-table [dataSource]="types" class="mat-elevation-z8">
+        <!-- ID -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef>ID</th>
+          <td mat-cell *matCellDef="let type">{{type.id}}</td>
+        </ng-container>
+        <!-- Année -->
+        <ng-container matColumnDef="annee">
+          <th mat-header-cell *matHeaderCellDef>Année</th>
+          <td mat-cell *matCellDef="let type">
+            <ng-container *ngIf="editRowId === type.id; else viewAnnee">
+              <input matInput type="number" [(ngModel)]="editAnnee" name="editAnnee{{type.id}}">
+            </ng-container>
+            <ng-template #viewAnnee>{{type.annee}}</ng-template>
+          </td>
+        </ng-container>
+        <!-- Périodicité -->
+        <ng-container matColumnDef="periodicite">
+          <th mat-header-cell *matHeaderCellDef>Périodicité</th>
+          <td mat-cell *matCellDef="let type">
+            <ng-container *ngIf="editRowId === type.id; else viewPeriodicite">
+              <input matInput [(ngModel)]="editPeriodicite" name="editPeriodicite{{type.id}}">
+            </ng-container>
+            <ng-template #viewPeriodicite>{{type.periodicite}}</ng-template>
+          </td>
+        </ng-container>
+        <!-- Session -->
+        <ng-container matColumnDef="session">
+          <th mat-header-cell *matHeaderCellDef>Session</th>
+          <td mat-cell *matCellDef="let type">
+            <ng-container *ngIf="editRowId === type.id; else viewSession">
+              <input matInput [(ngModel)]="editSession" name="editSession{{type.id}}">
+            </ng-container>
+            <ng-template #viewSession>{{type.session}}</ng-template>
+          </td>
+        </ng-container>
+        <!-- Statut -->
+        <ng-container matColumnDef="statut">
+          <th mat-header-cell *matHeaderCellDef>Statut</th>
+          <td mat-cell *matCellDef="let type">
+            <ng-container *ngIf="editRowId === type.id; else viewStatut">
+              <mat-select [(ngModel)]="editStatut" name="editStatut{{type.id}}">
+                <mat-option value="enable">Activé</mat-option>
+                <mat-option value="disable">Désactivé</mat-option>
+              </mat-select>
+            </ng-container>
+            <ng-template #viewStatut>
+              <span [ngClass]="{'enabled': type.statut === 'enable', 'disabled': type.statut === 'disable'}">
+                {{type.statut === 'enable' ? 'Activé' : 'Désactivé'}}
+              </span>
+            </ng-template>
+          </td>
+        </ng-container>
+        <!-- Actions -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let type" class="actions-cell">
+            <ng-container *ngIf="editRowId === type.id; else editBtn">
+              <button mat-icon-button color="primary" (click)="saveEdit(type)" matTooltip="Valider">
+                <mat-icon>check</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="cancelEdit()" matTooltip="Annuler">
+                <mat-icon>close</mat-icon>
+              </button>
+            </ng-container>
+            <ng-template #editBtn>
+              <button mat-icon-button color="accent" (click)="startEdit(type)" matTooltip="Modifier">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="deleteType(type.id)" matTooltip="Supprimer">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </ng-template>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </mat-card>
+  </div>
+</div>
+<ng-template #notAdmin>
+  <div class="not-admin-message">
+    Vous n'avez pas les droits d'accès à la section d'administration. Veuillez
+    contacter votre administrateur si vous pensez que c'est une erreur.
+  </div>
+</ng-template>

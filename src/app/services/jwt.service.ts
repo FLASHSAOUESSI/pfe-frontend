@@ -5,6 +5,14 @@ import { Injectable } from '@angular/core';
 })
 export class JwtService {
   /**
+   * Gets the JWT token from localStorage
+   * @returns The JWT token or null if not available
+   */
+  getToken(): string | null {
+    return localStorage.getItem('accessToken');
+  }
+
+  /**
    * Decodes a JWT token
    * @param token The JWT token to decode
    * @returns The decoded token or null if invalid
@@ -37,7 +45,7 @@ export class JwtService {
    * @returns boolean indicating if user is admin
    */
   isAdmin(): boolean {
-    const token = localStorage.getItem('accessToken');
+    const token = this.getToken();
     if (!token) {
       return false;
     }
@@ -59,7 +67,7 @@ export class JwtService {
    * @returns The user email or null if not available
    */
   getUserEmail(): string | null {
-    const token = localStorage.getItem('accessToken');
+    const token = this.getToken();
     if (!token) {
       return null;
     }
@@ -73,7 +81,7 @@ export class JwtService {
    * @returns boolean indicating if token is expired
    */
   isTokenExpired(): boolean {
-    const token = localStorage.getItem('accessToken');
+    const token = this.getToken();
     if (!token) {
       return true;
     }

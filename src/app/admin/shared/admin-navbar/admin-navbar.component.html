@@ -1,0 +1,48 @@
+<div class="admin-header">
+  <div class="admin-title">Panel d'Administration</div>
+  <div class="admin-user-info" *ngIf="userEmail">
+    Connecté en tant que: <strong>{{ userEmail }}</strong>
+  </div>
+</div>
+<div class="admin-menu">
+  <a
+    class="admin-menu-item"
+    [class.active]="activeSection === 'dashboard'"
+    routerLink="/admin"
+  >
+    <i class="fas fa-tachometer-alt"></i>
+    Tableau de bord
+  </a>
+  <a
+    class="admin-menu-item"
+    [class.active]="activeSection === 'messages'"
+    routerLink="/admin/messages"
+  >
+    <i class="fas fa-envelope"></i>
+    Messages
+  </a>
+  <a
+    class="admin-menu-item"
+    [class.active]="activeSection === 'surveys'"
+    routerLink="/admin/enquetes"
+  >
+    <i class="fas fa-poll"></i>
+    Analyse des enquêtes
+  </a>
+  <a
+    class="admin-menu-item"
+    [class.active]="activeSection === 'statistics'"
+    routerLink="/admin/statistiques"
+  >
+    <i class="fas fa-chart-bar"></i>
+    Statistiques
+  </a>
+  <a
+    class="admin-menu-item"
+    [class.active]="activeSection === 'type-enquete'"
+    routerLink="/admin/type-enquete"
+  >
+    <i class="fas fa-list-alt"></i>
+    Types d'enquête
+  </a>
+</div>

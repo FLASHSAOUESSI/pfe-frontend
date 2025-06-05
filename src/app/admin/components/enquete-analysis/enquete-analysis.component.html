@@ -1,0 +1,271 @@
+<div *ngIf="isUserAdmin; else notAdmin" class="admin-container">
+  <app-admin-navbar />
+  <div class="admin-content">
+    <div class="enquete-analysis-container">
+      <!-- Vue liste des enquêtes -->
+      <div class="enquetes-list" *ngIf="!selectedEnquete">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Analyse des Enquêtes</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <table mat-table [dataSource]="enquetes" class="mat-elevation-z8">
+              <!-- Identifiant Stat Column -->
+              <ng-container matColumnDef="identifiantStat">
+                <th mat-header-cell *matHeaderCellDef>Identifiant Stat</th>
+                <td mat-cell *matCellDef="let enquete">{{enquete.identifiantStat}}</td>
+              </ng-container>
+
+              <!-- Type Enquête Column -->
+              <ng-container matColumnDef="type_enquete">
+                <th mat-header-cell *matHeaderCellDef>Type d'enquête</th>
+                <td mat-cell *matCellDef="let enquete">
+                  <ng-container *ngIf="enquete.typeEnquete">
+                    <span class="pill pill-annee">{{ enquete.typeEnquete.annee }}</span>
+                    <span class="pill pill-session">{{ enquete.typeEnquete.session }}</span>
+                    <span class="pill pill-periodicite">{{ enquete.typeEnquete.periodicite }}</span>
+                    <span class="pill"
+                      [ngClass]="{
+                        'pill-status-enabled': enquete.typeEnquete.statut === 'enable',
+                        'pill-status-disabled': enquete.typeEnquete.statut === 'disable'
+                      }"
+                      style="margin-left: 8px;"
+                    >
+                      <mat-icon style="font-size: 16px; vertical-align: middle;">
+                        {{ enquete.typeEnquete.statut === 'enable' ? 'check_circle' : 'cancel' }}
+                      </mat-icon>
+                      {{ enquete.typeEnquete.statut === 'enable' ? 'Activé' : 'Désactivé' }}
+                    </span>
+                  </ng-container>
+                </td>
+              </ng-container>
+
+              <!-- Entreprise Column -->
+              <ng-container matColumnDef="entreprise">
+                <th mat-header-cell *matHeaderCellDef>Entreprise</th>
+                <td mat-cell *matCellDef="let enquete">
+                  <button mat-button color="accent" (click)="viewEntreprise(enquete)">
+                    Voir entreprise
+                  </button>
+                </td>
+              </ng-container>
+
+              <!-- Status Column -->
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef>Statut</th>
+                <td mat-cell *matCellDef="let enquete">
+                  <span class="pill"
+                    [ngClass]="{
+                      'pill-status-enabled': enquete.status === 'COMPLETED',
+                      'pill-status-disabled': enquete.status === 'INCOMPLETE'
+                    }"
+                  >
+                    <mat-icon style="font-size: 16px; vertical-align: middle;">
+                      {{ enquete.status === 'COMPLETED' ? 'check_circle' : 'cancel' }}
+                    </mat-icon>
+                    {{ enquete.status === 'COMPLETED' ? 'Terminé' : 'Non terminé' }}
+                  </span>
+                </td>
+              </ng-container>
+
+              <!-- Actions Column -->
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>Actions</th>
+                <td mat-cell *matCellDef="let enquete">
+                  <button mat-icon-button color="primary" (click)="selectEnquete(enquete)">
+                    <mat-icon>visibility</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <!-- Vue détaillée d'une enquête -->
+      <div class="enquete-details" *ngIf="selectedEnquete">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>
+              Détails de l'enquête #{{selectedEnquete.id}}
+              <button mat-icon-button color="primary" (click)="unselectEnquete()">
+                <mat-icon>arrow_back</mat-icon>
+              </button>
+            </mat-card-title>
+          </mat-card-header>
+
+          <mat-card-content>
+            <!-- Statut de l'enquête -->
+            <div class="status-section">
+              <h3>Statut de l'enquête</h3>
+              <mat-chip [style.background-color]="getStatusColor(selectedEnquete.status)">
+                {{getStatusText(selectedEnquete.status)}}
+              </mat-chip>
+              
+              <div *ngIf="selectedEnquete.status === 'INCOMPLETE'" class="missing-fields">
+                <h4>Champs manquants :</h4>
+                <ul>
+                  <li *ngFor="let field of getMissingFields(selectedEnquete)">{{field}}</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Informations de l'entreprise -->
+            <div class="company-section">
+              <h3>Informations de l'entreprise</h3>
+              <div class="info-grid">
+                <div class="info-item">
+                  <label>Nom de la société</label>
+                  <p>{{selectedEnquete.nomSociale}}</p>
+                </div>
+                <div class="info-item">
+                  <label>Adresse</label>
+                  <p>{{selectedEnquete.adresse}}</p>
+                </div>
+                <div class="info-item">
+                  <label>Téléphone</label>
+                  <p>{{selectedEnquete.telephone}}</p>
+                </div>
+                <div class="info-item">
+                  <label>Fax</label>
+                  <p>{{selectedEnquete.fax}}</p>
+                </div>
+                <div class="info-item">
+                  <label>Branche d'activité</label>
+                  <p>{{selectedEnquete.brancheActivite}}</p>
+                </div>
+                <div class="info-item">
+                  <label>Exportatrice</label>
+                  <p>{{selectedEnquete.exportatrice ? 'Oui' : 'Non'}}</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Informations du répondant -->
+            <div class="respondent-section">
+              <h3>Informations du répondant</h3>
+              <div class="info-grid">
+                <div class="info-item">
+                  <label>Nom du répondant</label>
+                  <p>{{selectedEnquete.nomRepondant}}</p>
+                </div>
+                <div class="info-item">
+                  <label>Email du répondant</label>
+                  <p>{{selectedEnquete.mailRepondant}}</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Situation et perspectives -->
+            <div class="situation-section">
+              <h3>Situation et perspectives</h3>
+              <div class="info-grid">
+                <div class="info-item">
+                  <label>Situation 1er trimestre</label>
+                  <p>{{selectedEnquete.situation1erTrimestre}}</p>
+                </div>
+                <div class="info-item">
+                  <label>Situation 2ème trimestre</label>
+                  <p>{{selectedEnquete.situation2emeTrimestre}}</p>
+                </div>
+                <div class="info-item">
+                  <label>Situation future</label>
+                  <p>{{selectedEnquete.situationFuture}}</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Effectifs -->
+            <div class="effectifs-section">
+              <h3>Effectifs</h3>
+              <div class="info-grid">
+                <div class="info-item">
+                  <label>Effectifs 1er trimestre</label>
+                  <p>{{selectedEnquete.effectifs1erTrimestre}}</p>
+                </div>
+                <div class="info-item">
+                  <label>Effectifs 2ème trimestre</label>
+                  <p>{{selectedEnquete.effectifs2emeTrimestre}}</p>
+                </div>
+                <div class="info-item">
+                  <label>Effectifs futurs</label>
+                  <p>{{selectedEnquete.effectifsFutur}}</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Capacité de production -->
+            <div class="capacity-section">
+              <h3>Capacité de production</h3>
+              <div class="info-grid">
+                <div class="info-item">
+                  <label>Pleine capacité</label>
+                  <p>{{selectedEnquete.pleineCapacite ? 'Oui' : 'Non'}}</p>
+                </div>
+                <div class="info-item">
+                  <label>Taux d'utilisation</label>
+                  <p>{{selectedEnquete.tauxUtilisationCapacite}}%</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Difficultés -->
+            <div class="difficulties-section" *ngIf="selectedEnquete.avoirDifficultes">
+              <h3>Difficultés rencontrées</h3>
+              <div class="difficulties-list">
+                <mat-chip-listbox>
+                  <mat-chip *ngIf="selectedEnquete.diffApprovisionnement">
+                    Approvisionnement en matières premières
+                  </mat-chip>
+                  <mat-chip *ngIf="selectedEnquete.diffPieces">
+                    Manque de pièces de rechange
+                  </mat-chip>
+                  <mat-chip *ngIf="selectedEnquete.diffTresorerie">
+                    Difficultés de trésorerie
+                  </mat-chip>
+                  <mat-chip *ngIf="selectedEnquete.diffAutre">
+                    {{selectedEnquete.diffAutre}}
+                  </mat-chip>
+                </mat-chip-listbox>
+              </div>
+            </div>
+
+            <!-- Type Enquête Details -->
+            <div class="type-enquete-details" *ngIf="selectedEnquete?.typeEnquete">
+              <h3>Détails du type d'enquête</h3>
+              <div class="info-grid">
+                <div class="info-item"><label>Année</label><p>{{selectedEnquete.typeEnquete.annee}}</p></div>
+                <div class="info-item"><label>Session</label><p>{{selectedEnquete.typeEnquete.session}}</p></div>
+                <div class="info-item"><label>Périodicité</label><p>{{selectedEnquete.typeEnquete.periodicite}}</p></div>
+                <div class="info-item">
+                  <label>Statut</label>
+                  <span class="pill"
+                    [ngClass]="{
+                      'pill-status-enabled': selectedEnquete.typeEnquete.statut === 'enable',
+                      'pill-status-disabled': selectedEnquete.typeEnquete.statut === 'disable'
+                    }"
+                  >
+                    <mat-icon style="font-size: 16px; vertical-align: middle;">
+                      {{ selectedEnquete.typeEnquete.statut === 'enable' ? 'check_circle' : 'cancel' }}
+                    </mat-icon>
+                    {{ selectedEnquete.typeEnquete.statut === 'enable' ? 'Activé' : 'Désactivé' }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #notAdmin>
+  <div class="not-admin-message">
+    Vous n'avez pas les droits d'accès à la section d'administration. Veuillez
+    contacter votre administrateur si vous pensez que c'est une erreur.
+  </div>
+</ng-template>

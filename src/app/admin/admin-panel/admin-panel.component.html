@@ -1,58 +1,11 @@
 <div *ngIf="isUserAdmin; else notAdmin" class="admin-container">
-  <div class="admin-header">
-    <div class="admin-title">Panel d'Administration</div>
-    <div class="admin-user-info" *ngIf="userEmail">
-      Connecté en tant que: <strong>{{ userEmail }}</strong>
-    </div>
-  </div>
-
+  <app-admin-navbar />
   <div class="admin-content">
-    <div class="admin-menu">
-      <a
-        class="admin-menu-item"
-        [class.active]="activeSection === 'dashboard'"
-        routerLink="/admin"
-      >
-        Tableau de bord
-      </a>
-      <a
-        class="admin-menu-item"
-        [class.active]="activeSection === 'users'"
-        routerLink="/admin/utilisateurs"
-      >
-        Gestion des utilisateurs
-      </a>
-      <a
-        class="admin-menu-item"
-        [class.active]="activeSection === 'surveys'"
-        routerLink="/admin/enquetes"
-      >
-        Gestion des enquêtes
-      </a>
-      <a
-        class="admin-menu-item"
-        [class.active]="activeSection === 'settings'"
-        routerLink="/admin/parametres"
-      >
-        Paramètres système
-      </a>
-      <a
-        class="admin-menu-item"
-        [class.active]="activeSection === 'statistics'"
-        routerLink="/admin/statistiques"
-      >
-        Statistiques
-      </a>
-    </div>
-
     <!-- Dashboard Stats Section -->
     <div *ngIf="activeSection === 'dashboard'" class="admin-dashboard">
       <h2>Tableau de bord des entreprises</h2>
-
       <div *ngIf="isLoading" class="loading-spinner">Chargement...</div>
-
       <div *ngIf="error" class="error-message">{{ error }}</div>
-
       <div *ngIf="dashboardStats" class="stats-cards">
         <div class="stat-card total">
           <div class="stat-value">{{ dashboardStats.totalEnterprises }}</div>
@@ -73,7 +26,6 @@
           <div class="stat-label">Rejetées</div>
         </div>
       </div>
-
       <div class="admin-actions">
         <div class="admin-card">
           <div class="admin-card-title">Gestion des entreprises</div>
@@ -84,18 +36,22 @@
               (change)="loadEnterprisesByStatus(selectedStatus)"
             >
               <option *ngFor="let status of statusOptions" [value]="status">
-                {{ status }}
-              </option>
+  <ng-container [ngSwitch]="status">
+    <span *ngSwitchCase="'VALIDATED'">Validé</span>
+    <span *ngSwitchCase="'PENDING'">En attente</span>
+    <span *ngSwitchCase="'REJECTED'">Rejeté</span>
+    <span *ngSwitchDefault>{{ status }}</span>
+  </ng-container>
+</option>
+
             </select>
           </div>
-
           <div
             *ngIf="enterprises.length === 0 && !isLoading"
             class="no-data-message"
           >
             Aucune entreprise trouvée avec ce statut.
           </div>
-
           <table *ngIf="enterprises.length > 0" class="enterprises-table">
             <thead>
               <tr>
@@ -137,25 +93,21 @@
         </div>
       </div>
     </div>
-
     <!-- Users Management Section - Placeholder -->
     <div *ngIf="activeSection === 'users'" class="admin-section">
       <h2>Gestion des utilisateurs</h2>
       <p>Cette section est en cours de développement.</p>
     </div>
-
     <!-- Surveys Management Section - Placeholder -->
     <div *ngIf="activeSection === 'surveys'" class="admin-section">
       <h2>Gestion des enquêtes</h2>
       <p>Cette section est en cours de développement.</p>
     </div>
-
     <!-- Settings Section - Placeholder -->
     <div *ngIf="activeSection === 'settings'" class="admin-section">
       <h2>Paramètres système</h2>
       <p>Cette section est en cours de développement.</p>
     </div>
-
     <!-- Statistics Section - Placeholder -->
     <div *ngIf="activeSection === 'statistics'" class="admin-section">
       <h2>Statistiques</h2>

@@ -201,24 +201,36 @@ Réponse:`;
     }
   }
 
-  // API alternative: Hugging Face (gratuite)
   private async callHuggingFaceAPI(prompt: string): Promise<string> {
-    const HF_API_URL = 'https://api-inference.huggingface.co/models/microsoft/DialoGPT-medium';
-    
-    try {
-      const response = await this.http.post(HF_API_URL, {
-        inputs: prompt
-      }, {
-        headers: {
-          'Authorization': 'Bearer YOUR_HF_TOKEN_HERE' // Token Hugging Face gratuit
-        }
-      }).toPromise() as any;
+  const HF_API_URL = 'https://api-inference.huggingface.co/models/HuggingFaceH4/zephyr-7b-beta';
 
-      return response?.generated_text || 'Réponse non disponible pour le moment.';
-    } catch (error) {
-      return this.getStaticResponse();
+  try {
+    const response = await this.http.post(HF_API_URL, {
+      inputs: prompt
+    }, {
+      headers: {
+        'Authorization': 'Bearer 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',
+        'Content-Type': 'application/json'
+      }
+    }).toPromise() as any;
+
+    console.log('Réponse Zephyr :', response);
+
+    const fullText = response[0]?.generated_text ?? '';
+
+    // Extraire la partie après "Réponse:"
+    const reponseIndex = fullText.indexOf('Réponse:');
+    if (reponseIndex !== -1) {
+      // On récupère uniquement le texte après "Réponse:"
+      return fullText.substring(reponseIndex + 'Réponse:'.length).trim();
     }
+
+    return 'Réponse non disponible pour le moment.';
+  } catch (error) {
+    console.error('Hugging Face API échouée:', error);
+    return this.getStaticResponse();
   }
+}
 
   // Réponse statique en cas d'échec des APIs
   private getStaticResponse(): string {

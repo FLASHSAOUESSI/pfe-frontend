@@ -12,9 +12,16 @@ export class EnqueteService {
   private readonly API_URL= "http://localhost:9090/api/enquetes"
 
   create(request:any): Observable<any>{
+    const token =localStorage.getItem("accessToken")
+    console.log(token)
    return this.httpclient.post<any>(`${this.API_URL}`, request)
   }
+  
+  
 
+  getAll():Observable<any>{
+    return this.httpclient.get<any>(`${this.API_URL}`)
+  }
 
 }
 

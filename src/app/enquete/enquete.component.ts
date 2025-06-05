@@ -7,9 +7,10 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { EnqueteService } from './enquete.service';
 import { InvestigateurService } from './investigator.service'; // Adjust path if necessary
+import { HotToastService } from '@ngxpert/hot-toast';
 
 // Define interfaces based on expected API response
 interface Entreprise {
@@ -39,17 +40,24 @@ export interface Investigator {
   templateUrl: './enquete.component.html',
   styleUrls: ['./enquete.component.css'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, RouterModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    RouterModule,
+  ],
 })
 export class EnqueteComponent implements OnInit {
   enqueteForm!: FormGroup;
   submitted = false;
-
+  typeEnqueteId :number;
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private investigatorService: InvestigateurService,
-    private enqueteService: EnqueteService
+    private enqueteService: EnqueteService,
+    private toast: HotToastService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -81,10 +89,20 @@ export class EnqueteComponent implements OnInit {
       diffApprovisionnement: [''],
       diffPieces: [],
       diffTresorerie: [],
+      typeEnquete: this.formBuilder.group({
+    id: ['']
+  })
     });
 
     // Then load data and patch the form
     this.loadAndPrefillData();
+
+
+    this.route.queryParams.subscribe(params => {
+    const typeEnquete = +params['type'];
+    console.log('Received typeEnqueteId:', typeEnquete);
+    this.typeEnqueteId=typeEnquete;
+  });
   }
 
   loadAndPrefillData(): void {
@@ -143,11 +161,12 @@ export class EnqueteComponent implements OnInit {
     this.submitted = true;
 
     console.log(this.enqueteForm.value);
-
-    if (this.enqueteForm.invalid) {
-      const firstError = document.querySelector('form .ng-invalid'); // More specific selector
+    this.enqueteForm.patchValue({
+  typeEnquete: { id: this.typeEnqueteId }
+});
+      if (this.enqueteForm.invalid) {
+      const firstError = document.querySelector('form .ng-invalid');
       if (firstError) {
-        // Attempt to focus or scroll
         if (typeof (firstError as HTMLElement).focus === 'function') {
           (firstError as HTMLElement).focus();
         }
@@ -159,8 +178,16 @@ export class EnqueteComponent implements OnInit {
 
     console.log("Données de l'enquête:", this.enqueteForm.value);
 
-    this.enqueteService.create(this.enqueteForm.value).subscribe();
-    this.router.navigate(['/accueil']); // Navigate after successful save
+    this.enqueteService.create(this.enqueteForm.value).subscribe({
+      next: (response) => {
+        this.toast.success('Enquête enregistrée avec succès !');
+        this.router.navigate(['/accueil']);
+      },
+      error: (error) => {
+        this.toast.error('Erreur lors de l\'enregistrement de l\'enquête');
+        console.error('Erreur:', error);
+      }
+    });
   }
 
   onCancel() {

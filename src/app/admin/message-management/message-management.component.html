@@ -1,0 +1,98 @@
+<div class="admin-container">
+  <app-admin-navbar />
+<div class="message-management-container">
+  <div class="header">
+    <h2>Gestion des Messages</h2>
+    <div class="actions">
+      <button class="btn-filter" (click)="toggleUnrespondedFilter()">
+        <i class="fas" [ngClass]="showOnlyUnresponded ? 'fa-filter' : 'fa-filter-circle-xmark'"></i>
+        {{ showOnlyUnresponded ? 'Tous les messages' : 'Messages non répondus' }}
+      </button>
+      <button class="btn-refresh" (click)="loadMessages()" [disabled]="isLoading">
+        <i class="fas fa-sync-alt" [class.spinning]="isLoading"></i>
+        Actualiser
+      </button>
+    </div>
+  </div>
+
+  <div class="content">
+    <!-- Liste des messages -->
+    <div class="messages-list">
+      <div class="message-item" *ngFor="let message of messages" 
+           [class.selected]="selectedMessage?.id === message.id"
+           [class.responded]="message.responded"
+           (click)="selectMessage(message)">
+        <div class="message-header">
+          <div class="sender-info">
+            <span class="name">{{ message.name }}</span>
+            <span class="email">{{ message.email }}</span>
+          </div>
+          <span class="date">{{ formatDate(message.timestamp) }}</span>
+        </div>
+        <div class="message-subject">{{ message.subject }}</div>
+        <div class="message-preview">{{ message.message.substring(0, 100) }}...</div>
+        <div class="message-status" [class.responded]="message.responded">
+          <i class="fas" [ngClass]="message.responded ? 'fa-check-circle' : 'fa-clock'"></i>
+          {{ message.responded ? 'Répondu' : 'En attente' }}
+        </div>
+      </div>
+
+      <div class="no-messages" *ngIf="messages.length === 0">
+        <i class="fas fa-inbox"></i>
+        <p>Aucun message {{ showOnlyUnresponded ? 'non répondu' : '' }}</p>
+      </div>
+    </div>
+
+    <!-- Détails du message et réponse -->
+    <div class="message-details" *ngIf="selectedMessage">
+      <div class="selected-message">
+        <div class="message-header">
+          <h3>Message de {{ selectedMessage.name }}</h3>
+          <span class="date">{{ formatDate(selectedMessage.timestamp) }}</span>
+        </div>
+        <div class="message-info">
+          <p><strong>Email:</strong> {{ selectedMessage.email }}</p>
+          <p><strong>Sujet:</strong> {{ selectedMessage.subject }}</p>
+        </div>
+        <div class="message-content">
+          <p>{{ selectedMessage.message }}</p>
+        </div>
+        
+        <div class="response-section" *ngIf="selectedMessage.responded">
+          <h4>Réponse précédente</h4>
+          <div class="previous-response">
+            <p>{{ selectedMessage.adminResponse }}</p>
+            <span class="response-date">Envoyée le {{ formatDate(selectedMessage.responseTimestamp!) }}</span>
+          </div>
+        </div>
+
+        <div class="response-form">
+          <h4>{{ selectedMessage.responded ? 'Modifier la réponse' : 'Répondre' }}</h4>
+          <textarea 
+            [(ngModel)]="responseText" 
+            placeholder="Écrivez votre réponse ici..."
+            [class.is-invalid]="responseText.trim().length === 0"
+          ></textarea>
+          <div class="form-actions">
+            <button class="btn-cancel" (click)="selectedMessage = null">Annuler</button>
+            <button 
+              class="btn-send" 
+              (click)="sendResponse()"
+              [disabled]="isLoading || responseText.trim().length === 0"
+            >
+              <i class="fas" [ngClass]="isLoading ? 'fa-spinner fa-spin' : 'fa-paper-plane'"></i>
+              {{ isLoading ? 'Envoi en cours...' : 'Envoyer la réponse' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Message de sélection -->
+    <div class="select-message" *ngIf="!selectedMessage">
+      <i class="fas fa-envelope-open-text"></i>
+      <p>Sélectionnez un message pour y répondre</p>
+      </div>
+    </div>
+  </div>
+</div>
