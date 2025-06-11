@@ -13,7 +13,9 @@
               <!-- Identifiant Stat Column -->
               <ng-container matColumnDef="identifiantStat">
                 <th mat-header-cell *matHeaderCellDef>Identifiant Stat</th>
-                <td mat-cell *matCellDef="let enquete">{{enquete.identifiantStat}}</td>
+                <td mat-cell *matCellDef="let enquete">
+                  {{ enquete.identifiantStat }}
+                </td>
               </ng-container>
 
               <!-- Type Enquête Column -->
@@ -21,20 +23,37 @@
                 <th mat-header-cell *matHeaderCellDef>Type d'enquête</th>
                 <td mat-cell *matCellDef="let enquete">
                   <ng-container *ngIf="enquete.typeEnquete">
-                    <span class="pill pill-annee">{{ enquete.typeEnquete.annee }}</span>
-                    <span class="pill pill-session">{{ enquete.typeEnquete.session }}</span>
-                    <span class="pill pill-periodicite">{{ enquete.typeEnquete.periodicite }}</span>
-                    <span class="pill"
+                    <span class="pill pill-annee">{{
+                      enquete.typeEnquete.annee
+                    }}</span>
+                    <span class="pill pill-session">{{
+                      enquete.typeEnquete.session
+                    }}</span>
+                    <span class="pill pill-periodicite">{{
+                      enquete.typeEnquete.periodicite
+                    }}</span>
+                    <span
+                      class="pill"
                       [ngClass]="{
-                        'pill-status-enabled': enquete.typeEnquete.statut === 'enable',
-                        'pill-status-disabled': enquete.typeEnquete.statut === 'disable'
+                        'pill-status-enabled':
+                          enquete.typeEnquete.statut === 'enable',
+                        'pill-status-disabled':
+                          enquete.typeEnquete.statut === 'disable'
                       }"
-                      style="margin-left: 8px;"
+                      style="margin-left: 8px"
                     >
-                      <mat-icon style="font-size: 16px; vertical-align: middle;">
-                        {{ enquete.typeEnquete.statut === 'enable' ? 'check_circle' : 'cancel' }}
+                      <mat-icon style="font-size: 16px; vertical-align: middle">
+                        {{
+                          enquete.typeEnquete.statut === "enable"
+                            ? "check_circle"
+                            : "cancel"
+                        }}
                       </mat-icon>
-                      {{ enquete.typeEnquete.statut === 'enable' ? 'Activé' : 'Désactivé' }}
+                      {{
+                        enquete.typeEnquete.statut === "enable"
+                          ? "Activé"
+                          : "Désactivé"
+                      }}
                     </span>
                   </ng-container>
                 </td>
@@ -44,7 +63,11 @@
               <ng-container matColumnDef="entreprise">
                 <th mat-header-cell *matHeaderCellDef>Entreprise</th>
                 <td mat-cell *matCellDef="let enquete">
-                  <button mat-button color="accent" (click)="viewEntreprise(enquete)">
+                  <button
+                    mat-button
+                    color="accent"
+                    (click)="viewEntreprise(enquete)"
+                  >
                     Voir entreprise
                   </button>
                 </td>
@@ -54,16 +77,23 @@
               <ng-container matColumnDef="status">
                 <th mat-header-cell *matHeaderCellDef>Statut</th>
                 <td mat-cell *matCellDef="let enquete">
-                  <span class="pill"
+                  <span
+                    class="pill"
                     [ngClass]="{
                       'pill-status-enabled': enquete.status === 'COMPLETED',
                       'pill-status-disabled': enquete.status === 'INCOMPLETE'
                     }"
                   >
-                    <mat-icon style="font-size: 16px; vertical-align: middle;">
-                      {{ enquete.status === 'COMPLETED' ? 'check_circle' : 'cancel' }}
+                    <mat-icon style="font-size: 16px; vertical-align: middle">
+                      {{
+                        enquete.status === "COMPLETED"
+                          ? "check_circle"
+                          : "cancel"
+                      }}
                     </mat-icon>
-                    {{ enquete.status === 'COMPLETED' ? 'Terminé' : 'Non terminé' }}
+                    {{
+                      enquete.status === "COMPLETED" ? "Terminé" : "Non terminé"
+                    }}
                   </span>
                 </td>
               </ng-container>
@@ -72,14 +102,18 @@
               <ng-container matColumnDef="actions">
                 <th mat-header-cell *matHeaderCellDef>Actions</th>
                 <td mat-cell *matCellDef="let enquete">
-                  <button mat-icon-button color="primary" (click)="selectEnquete(enquete)">
+                  <button
+                    mat-icon-button
+                    color="primary"
+                    (click)="selectEnquete(enquete)"
+                  >
                     <mat-icon>visibility</mat-icon>
                   </button>
                 </td>
               </ng-container>
 
               <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
             </table>
           </mat-card-content>
         </mat-card>
@@ -90,8 +124,12 @@
         <mat-card>
           <mat-card-header>
             <mat-card-title>
-              Détails de l'enquête #{{selectedEnquete.id}}
-              <button mat-icon-button color="primary" (click)="unselectEnquete()">
+              Détails de l'enquête #{{ selectedEnquete.id }}
+              <button
+                mat-icon-button
+                color="primary"
+                (click)="unselectEnquete()"
+              >
                 <mat-icon>arrow_back</mat-icon>
               </button>
             </mat-card-title>
@@ -101,157 +139,530 @@
             <!-- Statut de l'enquête -->
             <div class="status-section">
               <h3>Statut de l'enquête</h3>
-              <mat-chip [style.background-color]="getStatusColor(selectedEnquete.status)">
-                {{getStatusText(selectedEnquete.status)}}
+              <mat-chip
+                [style.background-color]="
+                  getStatusColor(selectedEnquete.status)
+                "
+              >
+                {{ getStatusText(selectedEnquete.status) }}
               </mat-chip>
-              
-              <div *ngIf="selectedEnquete.status === 'INCOMPLETE'" class="missing-fields">
+
+              <div
+                *ngIf="selectedEnquete.status === 'INCOMPLETE'"
+                class="missing-fields"
+              >
                 <h4>Champs manquants :</h4>
                 <ul>
-                  <li *ngFor="let field of getMissingFields(selectedEnquete)">{{field}}</li>
+                  <li *ngFor="let field of getMissingFields(selectedEnquete)">
+                    {{ field }}
+                  </li>
                 </ul>
               </div>
             </div>
-
             <!-- Informations de l'entreprise -->
             <div class="company-section">
               <h3>Informations de l'entreprise</h3>
               <div class="info-grid">
-                <div class="info-item">
-                  <label>Nom de la société</label>
-                  <p>{{selectedEnquete.nomSociale}}</p>
+                <!-- Informations de l'enquête -->
+                <div class="info-subsection">
+                  <h4>Données de l'enquête</h4>
+                  <div class="info-item">
+                    <label>Nom de la société</label>
+                    <p [class.empty-value]="!selectedEnquete.nomSociale">
+                      {{ selectedEnquete.nomSociale || "Non renseigné" }}
+                    </p>
+                  </div>
+                  <div class="info-item">
+                    <label>Adresse</label>
+                    <p [class.empty-value]="!selectedEnquete.adresse">
+                      {{ selectedEnquete.adresse || "Non renseigné" }}
+                    </p>
+                  </div>
+                  <div class="info-item">
+                    <label>Téléphone</label>
+                    <p [class.empty-value]="!selectedEnquete.telephone">
+                      {{ selectedEnquete.telephone || "Non renseigné" }}
+                    </p>
+                  </div>
+                  <div class="info-item">
+                    <label>Fax</label>
+                    <p [class.empty-value]="!selectedEnquete.fax">
+                      {{ selectedEnquete.fax || "Non renseigné" }}
+                    </p>
+                  </div>
+                  <div class="info-item">
+                    <label>Branche d'activité</label>
+                    <p [class.empty-value]="!selectedEnquete.brancheActivite">
+                      {{ selectedEnquete.brancheActivite || "Non renseigné" }}
+                    </p>
+                  </div>
+                  <div class="info-item">
+                    <label>Exportatrice</label>
+                    <p
+                      [class.empty-value]="
+                        selectedEnquete.exportatrice === null ||
+                        selectedEnquete.exportatrice === undefined
+                      "
+                    >
+                      {{
+                        selectedEnquete.exportatrice !== null &&
+                        selectedEnquete.exportatrice !== undefined
+                          ? selectedEnquete.exportatrice
+                            ? "Oui"
+                            : "Non"
+                          : "Non renseigné"
+                      }}
+                    </p>
+                  </div>
+                  <div class="info-item">
+                    <label>Variation saisonnière</label>
+                    <p
+                      [class.empty-value]="
+                        selectedEnquete.variaisonSaisoniere === null ||
+                        selectedEnquete.variaisonSaisoniere === undefined
+                      "
+                    >
+                      {{
+                        selectedEnquete.variaisonSaisoniere !== null &&
+                        selectedEnquete.variaisonSaisoniere !== undefined
+                          ? selectedEnquete.variaisonSaisoniere
+                            ? "Oui"
+                            : "Non"
+                          : "Non renseigné"
+                      }}
+                    </p>
+                  </div>
                 </div>
-                <div class="info-item">
-                  <label>Adresse</label>
-                  <p>{{selectedEnquete.adresse}}</p>
+                <!-- Informations de l'entreprise validée -->
+                <div *ngIf="selectedEnquete.enterprise" class="info-subsection">
+                  <h4>Données de l'entreprise validée</h4>
+                  <div class="info-item">
+                    <label>ID Entreprise</label>
+                    <p>{{ selectedEnquete.enterprise.id }}</p>
+                  </div>
+                  <div class="info-item">
+                    <label>Nom de l'entreprise</label>
+                    <p [class.empty-value]="!selectedEnquete.enterprise.name">
+                      {{ selectedEnquete.enterprise.name || "Non renseigné" }}
+                    </p>
+                  </div>
+                  <div class="info-item">
+                    <label>Adresse de l'entreprise</label>
+                    <p
+                      [class.empty-value]="!selectedEnquete.enterprise.address"
+                    >
+                      {{
+                        selectedEnquete.enterprise.address || "Non renseigné"
+                      }}
+                    </p>
+                  </div>
+                  <div class="info-item">
+                    <label>Email de l'entreprise</label>
+                    <p [class.empty-value]="!selectedEnquete.enterprise.email">
+                      {{ selectedEnquete.enterprise.email || "Non renseigné" }}
+                    </p>
+                  </div>
+                  <div class="info-item">
+                    <label>Fax de l'entreprise</label>
+                    <p [class.empty-value]="!selectedEnquete.enterprise.fax">
+                      {{ selectedEnquete.enterprise.fax || "Non renseigné" }}
+                    </p>
+                  </div>
+                  <div class="info-item">
+                    <label>Statut de l'entreprise</label>
+                    <span
+                      class="pill"
+                      [ngClass]="{
+                        'pill-status-enabled':
+                          selectedEnquete.enterprise.status === 'VALIDATED',
+                        'pill-status-pending':
+                          selectedEnquete.enterprise.status === 'PENDING',
+                        'pill-status-disabled':
+                          selectedEnquete.enterprise.status === 'REJECTED'
+                      }"
+                    >
+                      <mat-icon style="font-size: 16px; vertical-align: middle">
+                        {{
+                          getEnterpriseStatusIcon(
+                            selectedEnquete.enterprise.status
+                          )
+                        }}
+                      </mat-icon>
+                      {{
+                        getEnterpriseStatusText(
+                          selectedEnquete.enterprise.status
+                        )
+                      }}
+                    </span>
+                  </div>
+                  <div class="info-item">
+                    <label>Gouvernorat</label>
+                    <p
+                      [class.empty-value]="
+                        !selectedEnquete.enterprise.governorateName
+                      "
+                    >
+                      {{
+                        selectedEnquete.enterprise.governorateName ||
+                          "Non renseigné"
+                      }}
+                      <span *ngIf="selectedEnquete.enterprise.governorateId">
+                        (ID:
+                        {{ selectedEnquete.enterprise.governorateId }})</span
+                      >
+                    </p>
+                  </div>
+                  <div class="info-item">
+                    <label>Nombre de responsables</label>
+                    <p
+                      [class.empty-value]="
+                        selectedEnquete.enterprise.responsablesCount === null ||
+                        selectedEnquete.enterprise.responsablesCount ===
+                          undefined
+                      "
+                    >
+                      {{
+                        selectedEnquete.enterprise.responsablesCount !== null &&
+                        selectedEnquete.enterprise.responsablesCount !==
+                          undefined
+                          ? selectedEnquete.enterprise.responsablesCount
+                          : "Non renseigné"
+                      }}
+                    </p>
+                  </div>
                 </div>
-                <div class="info-item">
-                  <label>Téléphone</label>
-                  <p>{{selectedEnquete.telephone}}</p>
-                </div>
-                <div class="info-item">
-                  <label>Fax</label>
-                  <p>{{selectedEnquete.fax}}</p>
-                </div>
-                <div class="info-item">
-                  <label>Branche d'activité</label>
-                  <p>{{selectedEnquete.brancheActivite}}</p>
-                </div>
-                <div class="info-item">
-                  <label>Exportatrice</label>
-                  <p>{{selectedEnquete.exportatrice ? 'Oui' : 'Non'}}</p>
+
+                <!-- Message si pas d'entreprise associée -->
+                <div
+                  *ngIf="!selectedEnquete.enterprise"
+                  class="info-subsection"
+                >
+                  <div class="no-enterprise-message">
+                    <mat-icon>info</mat-icon>
+                    <p>
+                      Aucune entreprise validée n'est associée à cette enquête.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
-
             <!-- Informations du répondant -->
             <div class="respondent-section">
               <h3>Informations du répondant</h3>
               <div class="info-grid">
                 <div class="info-item">
                   <label>Nom du répondant</label>
-                  <p>{{selectedEnquete.nomRepondant}}</p>
+                  <p [class.empty-value]="!selectedEnquete.nomRepondant">
+                    {{ selectedEnquete.nomRepondant || "Non renseigné" }}
+                  </p>
                 </div>
                 <div class="info-item">
                   <label>Email du répondant</label>
-                  <p>{{selectedEnquete.mailRepondant}}</p>
+                  <p [class.empty-value]="!selectedEnquete.mailRepondant">
+                    {{ selectedEnquete.mailRepondant || "Non renseigné" }}
+                  </p>
                 </div>
               </div>
             </div>
-
             <!-- Situation et perspectives -->
             <div class="situation-section">
               <h3>Situation et perspectives</h3>
               <div class="info-grid">
                 <div class="info-item">
                   <label>Situation 1er trimestre</label>
-                  <p>{{selectedEnquete.situation1erTrimestre}}</p>
+                  <p
+                    [class.empty-value]="!selectedEnquete.situation1erTrimestre"
+                  >
+                    {{
+                      selectedEnquete.situation1erTrimestre || "Non renseigné"
+                    }}
+                  </p>
                 </div>
                 <div class="info-item">
                   <label>Situation 2ème trimestre</label>
-                  <p>{{selectedEnquete.situation2emeTrimestre}}</p>
+                  <p
+                    [class.empty-value]="
+                      !selectedEnquete.situation2emeTrimestre
+                    "
+                  >
+                    {{
+                      selectedEnquete.situation2emeTrimestre || "Non renseigné"
+                    }}
+                  </p>
                 </div>
                 <div class="info-item">
                   <label>Situation future</label>
-                  <p>{{selectedEnquete.situationFuture}}</p>
+                  <p [class.empty-value]="!selectedEnquete.situationFuture">
+                    {{ selectedEnquete.situationFuture || "Non renseigné" }}
+                  </p>
                 </div>
               </div>
             </div>
-
             <!-- Effectifs -->
             <div class="effectifs-section">
               <h3>Effectifs</h3>
               <div class="info-grid">
                 <div class="info-item">
                   <label>Effectifs 1er trimestre</label>
-                  <p>{{selectedEnquete.effectifs1erTrimestre}}</p>
+                  <p
+                    [class.empty-value]="!selectedEnquete.effectifs1erTrimestre"
+                  >
+                    {{
+                      selectedEnquete.effectifs1erTrimestre || "Non renseigné"
+                    }}
+                  </p>
                 </div>
                 <div class="info-item">
                   <label>Effectifs 2ème trimestre</label>
-                  <p>{{selectedEnquete.effectifs2emeTrimestre}}</p>
+                  <p
+                    [class.empty-value]="
+                      !selectedEnquete.effectifs2emeTrimestre
+                    "
+                  >
+                    {{
+                      selectedEnquete.effectifs2emeTrimestre || "Non renseigné"
+                    }}
+                  </p>
                 </div>
                 <div class="info-item">
                   <label>Effectifs futurs</label>
-                  <p>{{selectedEnquete.effectifsFutur}}</p>
+                  <p [class.empty-value]="!selectedEnquete.effectifsFutur">
+                    {{ selectedEnquete.effectifsFutur || "Non renseigné" }}
+                  </p>
                 </div>
               </div>
             </div>
 
+            <!-- Prix des matières premières -->
+            <div class="price-section">
+              <h3>Prix des matières premières</h3>
+              <div class="info-grid">
+                <div class="info-item">
+                  <label>Prix matières 1er trimestre</label>
+                  <p
+                    [class.empty-value]="
+                      !selectedEnquete.prixMatieres1erTrimestre
+                    "
+                  >
+                    {{
+                      selectedEnquete.prixMatieres1erTrimestre ||
+                        "Non renseigné"
+                    }}
+                  </p>
+                </div>
+                <div class="info-item">
+                  <label>Prix matières 2ème trimestre</label>
+                  <p
+                    [class.empty-value]="
+                      !selectedEnquete.prixMatieres2emeTrimestre
+                    "
+                  >
+                    {{
+                      selectedEnquete.prixMatieres2emeTrimestre ||
+                        "Non renseigné"
+                    }}
+                  </p>
+                </div>
+                <div class="info-item">
+                  <label>Prix matières futurs</label>
+                  <p [class.empty-value]="!selectedEnquete.prixMatieresFutur">
+                    {{ selectedEnquete.prixMatieresFutur || "Non renseigné" }}
+                  </p>
+                </div>
+              </div>
+            </div>
             <!-- Capacité de production -->
             <div class="capacity-section">
               <h3>Capacité de production</h3>
               <div class="info-grid">
                 <div class="info-item">
                   <label>Pleine capacité</label>
-                  <p>{{selectedEnquete.pleineCapacite ? 'Oui' : 'Non'}}</p>
+                  <p
+                    [class.empty-value]="
+                      selectedEnquete.pleineCapacite === null ||
+                      selectedEnquete.pleineCapacite === undefined
+                    "
+                  >
+                    {{
+                      selectedEnquete.pleineCapacite !== null &&
+                      selectedEnquete.pleineCapacite !== undefined
+                        ? selectedEnquete.pleineCapacite
+                          ? "Oui"
+                          : "Non"
+                        : "Non renseigné"
+                    }}
+                  </p>
                 </div>
                 <div class="info-item">
                   <label>Taux d'utilisation</label>
-                  <p>{{selectedEnquete.tauxUtilisationCapacite}}%</p>
+                  <p
+                    [class.empty-value]="
+                      selectedEnquete.tauxUtilisationCapacite === null ||
+                      selectedEnquete.tauxUtilisationCapacite === undefined
+                    "
+                  >
+                    {{
+                      selectedEnquete.tauxUtilisationCapacite !== null &&
+                      selectedEnquete.tauxUtilisationCapacite !== undefined
+                        ? selectedEnquete.tauxUtilisationCapacite + "%"
+                        : "Non renseigné"
+                    }}
+                  </p>
+                </div>
+                <div class="info-item">
+                  <label>A des difficultés</label>
+                  <p
+                    [class.empty-value]="
+                      selectedEnquete.avoirDifficultes === null ||
+                      selectedEnquete.avoirDifficultes === undefined
+                    "
+                  >
+                    {{
+                      selectedEnquete.avoirDifficultes !== null &&
+                      selectedEnquete.avoirDifficultes !== undefined
+                        ? selectedEnquete.avoirDifficultes
+                          ? "Oui"
+                          : "Non"
+                        : "Non renseigné"
+                    }}
+                  </p>
                 </div>
               </div>
             </div>
-
             <!-- Difficultés -->
-            <div class="difficulties-section" *ngIf="selectedEnquete.avoirDifficultes">
+            <div
+              class="difficulties-section"
+              *ngIf="
+                selectedEnquete.avoirDifficultes ||
+                selectedEnquete.avoirDifficultes === false
+              "
+            >
               <h3>Difficultés rencontrées</h3>
-              <div class="difficulties-list">
+              <div
+                *ngIf="selectedEnquete.avoirDifficultes"
+                class="difficulties-list"
+              >
                 <mat-chip-listbox>
-                  <mat-chip *ngIf="selectedEnquete.diffApprovisionnement">
+                  <mat-chip
+                    *ngIf="
+                      selectedEnquete.diffApprovisionnement;
+                      else emptyApprovisionnement
+                    "
+                  >
                     Approvisionnement en matières premières
                   </mat-chip>
-                  <mat-chip *ngIf="selectedEnquete.diffPieces">
+                  <ng-template #emptyApprovisionnement>
+                    <mat-chip
+                      class="empty-chip"
+                      *ngIf="
+                        !selectedEnquete.diffApprovisionnement &&
+                        selectedEnquete.avoirDifficultes
+                      "
+                    >
+                      Approvisionnement: Non renseigné
+                    </mat-chip>
+                  </ng-template>
+
+                  <mat-chip
+                    *ngIf="selectedEnquete.diffPieces; else emptyPieces"
+                  >
                     Manque de pièces de rechange
                   </mat-chip>
-                  <mat-chip *ngIf="selectedEnquete.diffTresorerie">
+                  <ng-template #emptyPieces>
+                    <mat-chip
+                      class="empty-chip"
+                      *ngIf="
+                        !selectedEnquete.diffPieces &&
+                        selectedEnquete.avoirDifficultes
+                      "
+                    >
+                      Pièces de rechange: Non renseigné
+                    </mat-chip>
+                  </ng-template>
+
+                  <mat-chip
+                    *ngIf="selectedEnquete.diffTresorerie; else emptyTresorerie"
+                  >
                     Difficultés de trésorerie
                   </mat-chip>
-                  <mat-chip *ngIf="selectedEnquete.diffAutre">
-                    {{selectedEnquete.diffAutre}}
+                  <ng-template #emptyTresorerie>
+                    <mat-chip
+                      class="empty-chip"
+                      *ngIf="
+                        !selectedEnquete.diffTresorerie &&
+                        selectedEnquete.avoirDifficultes
+                      "
+                    >
+                      Trésorerie: Non renseigné
+                    </mat-chip>
+                  </ng-template>
+
+                  <mat-chip *ngIf="selectedEnquete.diffAutre; else emptyAutre">
+                    {{ selectedEnquete.diffAutre }}
                   </mat-chip>
+                  <ng-template #emptyAutre>
+                    <mat-chip
+                      class="empty-chip"
+                      *ngIf="
+                        !selectedEnquete.diffAutre &&
+                        selectedEnquete.avoirDifficultes
+                      "
+                    >
+                      Autres difficultés: Non renseigné
+                    </mat-chip>
+                  </ng-template>
                 </mat-chip-listbox>
+              </div>
+              <div
+                *ngIf="selectedEnquete.avoirDifficultes === false"
+                class="no-difficulties"
+              >
+                <p>Aucune difficulté signalée</p>
               </div>
             </div>
 
             <!-- Type Enquête Details -->
-            <div class="type-enquete-details" *ngIf="selectedEnquete?.typeEnquete">
+            <div
+              class="type-enquete-details"
+              *ngIf="selectedEnquete?.typeEnquete"
+            >
               <h3>Détails du type d'enquête</h3>
               <div class="info-grid">
-                <div class="info-item"><label>Année</label><p>{{selectedEnquete.typeEnquete.annee}}</p></div>
-                <div class="info-item"><label>Session</label><p>{{selectedEnquete.typeEnquete.session}}</p></div>
-                <div class="info-item"><label>Périodicité</label><p>{{selectedEnquete.typeEnquete.periodicite}}</p></div>
+                <div class="info-item">
+                  <label>Année</label>
+                  <p>{{ selectedEnquete.typeEnquete.annee }}</p>
+                </div>
+                <div class="info-item">
+                  <label>Session</label>
+                  <p>{{ selectedEnquete.typeEnquete.session }}</p>
+                </div>
+                <div class="info-item">
+                  <label>Périodicité</label>
+                  <p>{{ selectedEnquete.typeEnquete.periodicite }}</p>
+                </div>
                 <div class="info-item">
                   <label>Statut</label>
-                  <span class="pill"
+                  <span
+                    class="pill"
                     [ngClass]="{
-                      'pill-status-enabled': selectedEnquete.typeEnquete.statut === 'enable',
-                      'pill-status-disabled': selectedEnquete.typeEnquete.statut === 'disable'
+                      'pill-status-enabled':
+                        selectedEnquete.typeEnquete.statut === 'enable',
+                      'pill-status-disabled':
+                        selectedEnquete.typeEnquete.statut === 'disable'
                     }"
                   >
-                    <mat-icon style="font-size: 16px; vertical-align: middle;">
-                      {{ selectedEnquete.typeEnquete.statut === 'enable' ? 'check_circle' : 'cancel' }}
+                    <mat-icon style="font-size: 16px; vertical-align: middle">
+                      {{
+                        selectedEnquete.typeEnquete.statut === "enable"
+                          ? "check_circle"
+                          : "cancel"
+                      }}
                     </mat-icon>
-                    {{ selectedEnquete.typeEnquete.statut === 'enable' ? 'Activé' : 'Désactivé' }}
+                    {{
+                      selectedEnquete.typeEnquete.statut === "enable"
+                        ? "Activé"
+                        : "Désactivé"
+                    }}
                   </span>
                 </div>
               </div>

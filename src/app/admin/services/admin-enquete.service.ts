@@ -1,9 +1,21 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { JwtService } from '../../services/jwt.service';
 import { TypeEnquete } from './admin-type-enquete.service';
+
+export interface Enterprise {
+  id: number;
+  name: string;
+  address: string;
+  email: string;
+  fax: string;
+  status: string;
+  governorateId: number;
+  governorateName: string;
+  responsablesCount: number;
+}
 
 export interface Enquete {
   id: number;
@@ -37,38 +49,36 @@ export interface Enquete {
   status: 'COMPLETED' | 'INCOMPLETE';
   type_enquete?: TypeEnquete;
   typeEnquete?: TypeEnquete;
+  enterprise?: Enterprise;
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AdminEnqueteService {
   private apiUrl = `${environment.apiUrl}/api/admin/enquetes`;
 
-  constructor(
-    private http: HttpClient,
-    private jwtService: JwtService
-  ) {}
+  constructor(private http: HttpClient, private jwtService: JwtService) {}
 
   private getHeaders(): HttpHeaders {
     const token = this.jwtService.getToken();
     return new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
     });
   }
 
   // Obtenir toutes les enquêtes
   getAllEnquetes(): Observable<Enquete[]> {
     return this.http.get<Enquete[]>(this.apiUrl, {
-      headers: this.getHeaders()
+      headers: this.getHeaders(),
     });
   }
 
   // Obtenir une enquête par son ID
   getEnqueteById(id: number): Observable<Enquete> {
     return this.http.get<Enquete>(`${this.apiUrl}/${id}`, {
-      headers: this.getHeaders()
+      headers: this.getHeaders(),
     });
   }
 
@@ -89,11 +99,11 @@ export class AdminEnqueteService {
       'effectifs2emeTrimestre',
       'effectifsFutur',
       'pleineCapacite',
-      'tauxUtilisationCapacite'
+      'tauxUtilisationCapacite',
     ];
 
     // Vérifie si tous les champs obligatoires sont remplis
-    const isComplete = requiredFields.every(field => {
+    const isComplete = requiredFields.every((field) => {
       const value = enquete[field as keyof Enquete];
       return value !== null && value !== undefined && value !== '';
     });
@@ -102,9 +112,16 @@ export class AdminEnqueteService {
   }
 
   // Mettre à jour le statut d'une enquête
-  updateEnqueteStatus(id: number, status: 'COMPLETED' | 'INCOMPLETE'): Observable<Enquete> {
-    return this.http.patch<Enquete>(`${this.apiUrl}/${id}/status`, { status }, {
-      headers: this.getHeaders()
-    });
+  updateEnqueteStatus(
+    id: number,
+    status: 'COMPLETED' | 'INCOMPLETE'
+  ): Observable<Enquete> {
+    return this.http.patch<Enquete>(
+      `${this.apiUrl}/${id}/status`,
+      { status },
+      {
+        headers: this.getHeaders(),
+      }
+    );
   }
-} 
+}

@@ -8,31 +8,31 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { HotToastService } from '@ngxpert/hot-toast';
 import { EnqueteService } from './enquete.service';
 import { InvestigateurService } from './investigator.service'; // Adjust path if necessary
-import { HotToastService } from '@ngxpert/hot-toast';
 
-// Define interfaces based on expected API response
-interface Entreprise {
+// Define interfaces based on actual API response
+interface Enterprise {
   id: number;
   name: string;
   address: string;
   email: string;
   fax: string;
+  status: string;
+  governorateId: number;
+  governorateName: string;
+  responsablesCount: number;
 }
 
 export interface Investigator {
   id: number;
-  name: string;
+  nom: string;
   phone: string;
   email: string;
-  entreprise?: Entreprise;
-  username: string;
-  authorities: any[];
+  role: string;
   enabled: boolean;
-  accountNonLocked: boolean;
-  accountNonExpired: boolean;
-  credentialsNonExpired: boolean;
+  enterprise?: Enterprise;
 }
 
 @Component({
@@ -40,17 +40,15 @@ export interface Investigator {
   templateUrl: './enquete.component.html',
   styleUrls: ['./enquete.component.css'],
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    FormsModule,
-    RouterModule,
-  ],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, RouterModule],
 })
 export class EnqueteComponent implements OnInit {
   enqueteForm!: FormGroup;
   submitted = false;
-  typeEnqueteId :number;
+  typeEnqueteId: number;
+  dataPrefilledFromProfile = false;
+  prefilledFields: Set<string> = new Set();
+
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -90,21 +88,19 @@ export class EnqueteComponent implements OnInit {
       diffPieces: [],
       diffTresorerie: [],
       typeEnquete: this.formBuilder.group({
-    id: ['']
-  })
+        id: [''],
+      }),
     });
 
     // Then load data and patch the form
     this.loadAndPrefillData();
 
-
-    this.route.queryParams.subscribe(params => {
-    const typeEnquete = +params['type'];
-    console.log('Received typeEnqueteId:', typeEnquete);
-    this.typeEnqueteId=typeEnquete;
-  });
+    this.route.queryParams.subscribe((params) => {
+      const typeEnquete = +params['type'];
+      console.log('Received typeEnqueteId:', typeEnquete);
+      this.typeEnqueteId = typeEnquete;
+    });
   }
-
   loadAndPrefillData(): void {
     this.investigatorService.findCurrentResponsable().subscribe({
       next: (investigatorData: Investigator) => {
@@ -113,32 +109,66 @@ export class EnqueteComponent implements OnInit {
         if (investigatorData) {
           const valuesToPatch: any = {};
 
-          if (investigatorData.name) {
-            valuesToPatch.nomRepondant = investigatorData.name;
+          // Prefill investigator information
+          if (investigatorData.nom) {
+            valuesToPatch.nomRepondant = investigatorData.nom;
+            this.prefilledFields.add('nomRepondant');
           }
           if (investigatorData.email) {
             valuesToPatch.mailRepondant = investigatorData.email;
+            this.prefilledFields.add('mailRepondant');
           }
           if (investigatorData.phone) {
             valuesToPatch.telephone = investigatorData.phone;
+            this.prefilledFields.add('telephone');
           }
 
-          if (investigatorData.entreprise) {
-            if (investigatorData.entreprise.name) {
-              valuesToPatch.nomSociale = investigatorData.entreprise.name;
+          // Prefill company information from enterprise data
+          if (investigatorData.enterprise) {
+            if (investigatorData.enterprise.name) {
+              valuesToPatch.nomSociale = investigatorData.enterprise.name;
+              this.prefilledFields.add('nomSociale');
             }
-            if (investigatorData.entreprise.address) {
-              valuesToPatch.adresse = investigatorData.entreprise.address;
+            if (investigatorData.enterprise.address) {
+              valuesToPatch.adresse = investigatorData.enterprise.address;
+              this.prefilledFields.add('adresse');
+            }
+            if (investigatorData.enterprise.fax) {
+              valuesToPatch.fax = investigatorData.enterprise.fax;
+              this.prefilledFields.add('fax');
+            }
+            // Add company email if available and different from investigator email
+            if (
+              investigatorData.enterprise.email &&
+              investigatorData.enterprise.email !== investigatorData.email
+            ) {
+              console.log(
+                'Company email available:',
+                investigatorData.enterprise.email
+              );
             }
           } else {
             console.warn(
-              'Investigator data does not contain entreprise details.'
+              'Investigator data does not contain enterprise details.'
             );
           }
 
+          // Apply the patches to the form
           if (Object.keys(valuesToPatch).length > 0) {
             console.log('Patching form with values:', valuesToPatch);
             this.enqueteForm.patchValue(valuesToPatch);
+            this.dataPrefilledFromProfile = true;
+
+            // Show a success message to indicate data was prefilled
+            this.toast.success(
+              `${
+                Object.keys(valuesToPatch).length
+              } champs pré-remplis depuis votre profil`,
+              {
+                duration: 4000,
+                position: 'top-right',
+              }
+            );
           } else {
             console.log('No relevant data found to patch the form.');
           }
@@ -148,7 +178,10 @@ export class EnqueteComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error fetching investigator data:', error);
-        // Optionally show an error message to the user
+        this.toast.error('Impossible de récupérer vos informations', {
+          duration: 4000,
+          position: 'top-right',
+        });
       },
     });
   }
@@ -162,9 +195,10 @@ export class EnqueteComponent implements OnInit {
 
     console.log(this.enqueteForm.value);
     this.enqueteForm.patchValue({
-  typeEnquete: { id: this.typeEnqueteId }
-});
-      if (this.enqueteForm.invalid) {
+      typeEnquete: { id: this.typeEnqueteId },
+    });
+
+    if (this.enqueteForm.invalid) {
       const firstError = document.querySelector('form .ng-invalid');
       if (firstError) {
         if (typeof (firstError as HTMLElement).focus === 'function') {
@@ -184,9 +218,9 @@ export class EnqueteComponent implements OnInit {
         this.router.navigate(['/accueil']);
       },
       error: (error) => {
-        this.toast.error('Erreur lors de l\'enregistrement de l\'enquête');
+        this.toast.error("Erreur lors de l'enregistrement de l'enquête");
         console.error('Erreur:', error);
-      }
+      },
     });
   }
 
@@ -198,5 +232,9 @@ export class EnqueteComponent implements OnInit {
     ) {
       this.router.navigate(['/accueil']);
     }
+  }
+  // Helper method to check if a field is prefilled
+  isFieldPrefilled(fieldName: string): boolean {
+    return this.prefilledFields.has(fieldName);
   }
 }

@@ -130,6 +130,7 @@ table {
   background-color: #f5f5f5;
   padding: 15px;
   border-radius: 4px;
+  margin-bottom: 12px;
 }
 
 .info-item label {
@@ -137,12 +138,20 @@ table {
   color: #666;
   font-size: 0.9em;
   margin-bottom: 5px;
+  font-weight: 600;
+  color: #495057;
 }
 
 .info-item p {
   margin: 0;
   color: #333;
   font-weight: 500;
+  padding: 6px 8px;
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 3px;
+  font-size: 14px;
+  min-height: 20px;
 }
 
 /* Sections */
@@ -212,12 +221,21 @@ h3 {
   margin-right: 6px;
   font-size: 0.97em;
   font-weight: 500;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
   letter-spacing: 0.2px;
 }
-.pill-annee { background: #e3f2fd; color: #1976d2; }
-.pill-session { background: #fce4ec; color: #c2185b; }
-.pill-periodicite { background: #e8f5e9; color: #388e3c; }
+.pill-annee {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+.pill-session {
+  background: #fce4ec;
+  color: #c2185b;
+}
+.pill-periodicite {
+  background: #e8f5e9;
+  color: #388e3c;
+}
 .pill-status-enabled {
   background: #e3f2fd;
   color: #1976d2;
@@ -227,4 +245,123 @@ h3 {
   background: #ffebee;
   color: #c62828;
   font-weight: bold;
+}
+
+/* Styles for enterprise information sections */
+.info-subsection {
+  background-color: #ffffff;
+  border: 1px solid #e9ecef;
+  border-radius: 6px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.info-subsection h4 {
+  color: #495057;
+  margin-bottom: 15px;
+  font-size: 16px;
+  font-weight: 600;
+  border-bottom: 1px solid #e9ecef;
+  padding-bottom: 5px;
+}
+
+.no-enterprise-message {
+  display: flex;
+  align-items: center;
+  background-color: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 6px;
+  padding: 20px;
+  color: #856404;
+  text-align: center;
+}
+
+.no-enterprise-message mat-icon {
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+.no-enterprise-message p {
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Additional pill styles for enterprise status */
+.pill-status-pending {
+  background: #fff3e0;
+  color: #ef6c00;
+  font-weight: bold;
+}
+
+/* Empty value styling */
+.empty-value {
+  color: #dc3545 !important;
+  font-style: italic;
+  background-color: #f8d7da;
+  padding: 2px 6px;
+  border-radius: 3px;
+  border: 1px solid #f5c6cb;
+}
+
+/* Price section specific styling */
+.price-section {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.price-section h3 {
+  color: #495057;
+  margin-bottom: 15px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* Difficulties section styling */
+.difficulties-section {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.difficulties-section h3 {
+  color: #495057;
+  margin-bottom: 15px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.empty-chip {
+  background-color: #f8d7da !important;
+  color: #721c24 !important;
+  border: 1px solid #f5c6cb !important;
+}
+
+.no-difficulties {
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  border-radius: 4px;
+  padding: 10px;
+  text-align: center;
+}
+
+.no-difficulties p {
+  margin: 0;
+  color: #155724;
+  font-style: italic;
+}
+
+/* Responsive design for enterprise information */
+@media (max-width: 768px) {
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .info-subsection {
+    padding: 15px;
+  }
 }

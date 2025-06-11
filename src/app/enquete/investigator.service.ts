@@ -8,7 +8,7 @@ import { Investigator } from './enquete.component';
 })
 export class InvestigateurService {
   private readonly httpclient = inject(HttpClient);
-  private readonly API_URL = 'http://localhost:9090/api/responsables';
+  private readonly API_URL = 'http://localhost:9090/api/admin';
 
   findCurrentResponsable(): Observable<Investigator> {
     return this.httpclient.get<Investigator>(`${this.API_URL}/me`);

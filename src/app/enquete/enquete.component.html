@@ -1,567 +1,897 @@
 <div class="enquete-container">
-    <div class="enquete-header">
-      <div class="header-top">
-        <div class="header-left">
-          <p class="ministry-fr">RÉPUBLIQUE TUNISIENNE</p>
-          <p class="ministry-fr">MINISTÈRE DU DÉVELOPPEMENT DE L'INVESTISSEMENT</p>
-          <p class="ministry-fr">ET DE LA COOPÉRATION INTERNATIONALE</p>
-          <p class="ministry-fr">INSTITUT NATIONAL DE LA STATISTIQUE</p>
-        </div>
-        <div class="title-section">
-          <h1 class="main-title">
-            <span class="title-ar">المسح حول وضع و آفاق المؤسسات الصناعية</span>
-            <span class="title-fr">ENQUÊTE SUR LA SITUATION ET LES PERSPECTIVES<br>DES ENTREPRISES INDUSTRIELLES</span>
-          </h1>
-        </div>
-        <div class="header-right">
-          <p class="ministry-ar">الجمهورية التونسية</p>
-          <p class="ministry-ar">وزارة التنمية و الإستثمار الدولي</p>
-          <p class="ministry-ar">المعهد الوطني للإحصاء</p>
-        </div>
+  <div class="enquete-header">
+    <div class="header-top">
+      <div class="header-left">
+        <p class="ministry-fr">RÉPUBLIQUE TUNISIENNE</p>
+        <p class="ministry-fr">
+          MINISTÈRE DU DÉVELOPPEMENT DE L'INVESTISSEMENT
+        </p>
+        <p class="ministry-fr">ET DE LA COOPÉRATION INTERNATIONALE</p>
+        <p class="ministry-fr">INSTITUT NATIONAL DE LA STATISTIQUE</p>
       </div>
-      
-      <div class="period-selector">
-         
-        
-        
+      <div class="title-section">
+        <h1 class="main-title">
+          <span class="title-ar">المسح حول وضع و آفاق المؤسسات الصناعية</span>
+          <span class="title-fr"
+            >ENQUÊTE SUR LA SITUATION ET LES PERSPECTIVES<br />DES ENTREPRISES
+            INDUSTRIELLES</span
+          >
+        </h1>
+      </div>
+      <div class="header-right">
+        <p class="ministry-ar">الجمهورية التونسية</p>
+        <p class="ministry-ar">وزارة التنمية و الإستثمار الدولي</p>
+        <p class="ministry-ar">المعهد الوطني للإحصاء</p>
       </div>
     </div>
-  
-    <form [formGroup]="enqueteForm" (ngSubmit)="onSubmit()">
-      <div class="visa-section">
-        <p class="visa-text"></p>
-      </div>
-      
-      <div class="enquete-section">
-        <div class="form-row">
-          <div class="form-group identifiant">
-            <div class="label-group">
-              <label class="label-fr">Identifiant statistique</label>
-              <label class="label-ar">المعرف الإحصائي</label>
-            </div>
-            <input type="text" class="form-control" formControlName="identifiantStat">
-          </div>
-        </div>
-  
-        <div class="form-group bilingual">
+
+    <div class="period-selector"></div>
+  </div>
+  <form [formGroup]="enqueteForm" (ngSubmit)="onSubmit()">
+    <!-- Data prefilled notification -->
+    <div *ngIf="dataPrefilledFromProfile" class="prefilled-data-notice">
+      <i class="fas fa-info-circle"></i>
+      <span
+        >Les informations ci-dessous ont été automatiquement remplies à partir
+        de votre profil. Vous pouvez les modifier si nécessaire.</span
+      >
+    </div>
+
+    <div class="visa-section">
+      <p class="visa-text"></p>
+    </div>
+
+    <div class="enquete-section">
+      <div class="form-row">
+        <div class="form-group identifiant">
           <div class="label-group">
-            <label class="label-fr">1. Nom ou raison sociale</label>
-            <label class="label-ar">1. إسم الشركة أو تسميتها</label>
+            <label class="label-fr">Identifiant statistique</label>
+            <label class="label-ar">المعرف الإحصائي</label>
           </div>
-          <input type="text" class="form-control" formControlName="nomSociale">
-        </div>
-        
-        <div class="form-group bilingual">
-          <div class="label-group">
-            <label class="label-fr">2. Adresse</label>
-            <label class="label-ar">2. العنوان</label>
-          </div>
-          <input type="text" class="form-control" formControlName="adresse">
-        </div>
-        
-        <div class="form-row">
-          <div class="form-group col-md-6 bilingual">
-            <div class="label-group">
-              <label class="label-fr">Tél</label>
-              <label class="label-ar">الهاتف</label>
-            </div>
-            <input type="tel" class="form-control" formControlName="telephone">
-          </div>
-          <div class="form-group col-md-6 bilingual">
-            <div class="label-group">
-              <label class="label-fr">Fax</label>
-              <label class="label-ar">الفاكس</label>
-            </div>
-            <input type="text" class="form-control" formControlName="fax">
-          </div>
-        </div>
-        
-        <div class="form-group bilingual">
-          <div class="label-group">
-            <label class="label-fr">3. Nom et fonction de la personne qui a répondu</label>
-            <label class="label-ar">3. إسم ووظيفة الشخص المستجوب</label>
-          </div>
-          <input type="text" class="form-control" formControlName="nomRepondant">
-        </div>
-        
-        <div class="form-group bilingual">
-          <div class="label-group">
-            <label class="label-fr">4. Mail de la personne qui a répondu</label>
-            <label class="label-ar">4. البريد الإلكتروني للمستجوب</label>
-          </div>
-          <input type="email" class="form-control" formControlName="mailRepondant">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="identifiantStat"
+          />
         </div>
       </div>
-  
-      <div class="section-header">
-        <div class="title-container">
-          <span class="title-fr">RENSEIGNEMENTS GÉNÉRAUX :</span>
-          <span class="title-ar">معلومات عامة :</span>
+
+      <div class="form-group bilingual">
+        <div class="label-group">
+          <label class="label-fr">1. Nom ou raison sociale</label>
+          <label class="label-ar">1. إسم الشركة أو تسميتها</label>
+        </div>
+        <input type="text" class="form-control" formControlName="nomSociale" />
+      </div>
+
+      <div class="form-group bilingual">
+        <div class="label-group">
+          <label class="label-fr">2. Adresse</label>
+          <label class="label-ar">2. العنوان</label>
+        </div>
+        <input type="text" class="form-control" formControlName="adresse" />
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-6 bilingual">
+          <div class="label-group">
+            <label class="label-fr">Tél</label>
+            <label class="label-ar">الهاتف</label>
+          </div>
+          <input type="tel" class="form-control" formControlName="telephone" />
+        </div>
+        <div class="form-group col-md-6 bilingual">
+          <div class="label-group">
+            <label class="label-fr">Fax</label>
+            <label class="label-ar">الفاكس</label>
+          </div>
+          <input type="text" class="form-control" formControlName="fax" />
         </div>
       </div>
-      
-      <div class="enquete-section">
-        <div class="form-group bilingual">
-          <div class="label-group">
-            <label class="label-fr">4. Branche d'activité de votre entreprise</label>
-            <label class="label-ar">4. قطاع نشاط مؤسستكم</label>
-          </div>
-          <select class="form-control" formControlName="brancheActivite">
-            <option value="">Sélectionnez une branche</option>
-            <option value="industrie">Industrie manufacturière</option>
-            <option value="commerce">Commerce</option>
-            <option value="service">Services</option>
-          </select>
+
+      <div class="form-group bilingual">
+        <div class="label-group">
+          <label class="label-fr"
+            >3. Nom et fonction de la personne qui a répondu</label
+          >
+          <label class="label-ar">3. إسم ووظيفة الشخص المستجوب</label>
         </div>
-        
-        <div class="form-group bilingual">
-          <div class="label-group">
-            <label class="label-fr">5. Est ce que votre entreprise est exportatrice?</label>
-            <label class="label-ar">5. هل أن مؤسستكم مصدرة في الخارج؟</label>
-          </div>
-          <div class="radio-container">
-            <div class="custom-radio">
-              <input type="radio" id="exportYes" formControlName="exportatrice" value="true">
-              <label for="exportYes">
-                <span class="label-fr">OUI</span>
-                <span class="label-ar">نعم</span>
-              </label>
-            </div>
-            <div class="custom-radio">
-              <input type="radio" id="exportNo" formControlName="exportatrice" value="false">
-              <label for="exportNo">
-                <span class="label-fr">NON</span>
-                <span class="label-ar">لا</span>
-              </label>
-            </div>
-          </div>
-          test
-          <div class="radio-guide">(encadrer votre réponse)</div>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="nomRepondant"
+        />
+      </div>
+
+      <div class="form-group bilingual">
+        <div class="label-group">
+          <label class="label-fr">4. Mail de la personne qui a répondu</label>
+          <label class="label-ar">4. البريد الإلكتروني للمستجوب</label>
         </div>
-        
-        <div class="form-group bilingual">
-          <div class="label-group">
-            <label class="label-fr">6. Jugez-vous que le niveau de production de votre entreprise varie sensiblement selon la saison?</label>
-            <label class="label-ar">6. هل ترى أن مستوى إنتاج مؤسستكم يتغير حسب الموسم؟</label>
+        <input
+          type="email"
+          class="form-control"
+          formControlName="mailRepondant"
+        />
+      </div>
+    </div>
+
+    <div class="section-header">
+      <div class="title-container">
+        <span class="title-fr">RENSEIGNEMENTS GÉNÉRAUX :</span>
+        <span class="title-ar">معلومات عامة :</span>
+      </div>
+    </div>
+
+    <div class="enquete-section">
+      <div class="form-group bilingual">
+        <div class="label-group">
+          <label class="label-fr"
+            >4. Branche d'activité de votre entreprise</label
+          >
+          <label class="label-ar">4. قطاع نشاط مؤسستكم</label>
+        </div>
+        <select class="form-control" formControlName="brancheActivite">
+          <option value="">Sélectionnez une branche</option>
+          <option value="industrie">Industrie manufacturière</option>
+          <option value="commerce">Commerce</option>
+          <option value="service">Services</option>
+        </select>
+      </div>
+
+      <div class="form-group bilingual">
+        <div class="label-group">
+          <label class="label-fr"
+            >5. Est ce que votre entreprise est exportatrice?</label
+          >
+          <label class="label-ar">5. هل أن مؤسستكم مصدرة في الخارج؟</label>
+        </div>
+        <div class="radio-container">
+          <div class="custom-radio">
+            <input
+              type="radio"
+              id="exportYes"
+              formControlName="exportatrice"
+              value="true"
+            />
+            <label for="exportYes">
+              <span class="label-fr">OUI</span>
+              <span class="label-ar">نعم</span>
+            </label>
           </div>
-          <div class="radio-container">
-            <div class="custom-radio">
-              <input type="radio" id="seasonYes" formControlName="variaisonSaisoniere" value="true">
-              <label for="seasonYes">
-                <span class="label-fr">OUI</span>
-                <span class="label-ar">نعم</span>
-              </label>
-            </div>
-            <div class="custom-radio">
-              <input type="radio" id="seasonNo" formControlName="variaisonSaisoniere" value="false">
-              <label for="seasonNo">
-                <span class="label-fr">NON</span>
-                <span class="label-ar">لا</span>
-              </label>
-            </div>
+          <div class="custom-radio">
+            <input
+              type="radio"
+              id="exportNo"
+              formControlName="exportatrice"
+              value="false"
+            />
+            <label for="exportNo">
+              <span class="label-fr">NON</span>
+              <span class="label-ar">لا</span>
+            </label>
           </div>
-          <div class="radio-guide">(encadrer votre réponse)</div>
+        </div>
+        test
+        <div class="radio-guide">(encadrer votre réponse)</div>
+      </div>
+
+      <div class="form-group bilingual">
+        <div class="label-group">
+          <label class="label-fr"
+            >6. Jugez-vous que le niveau de production de votre entreprise varie
+            sensiblement selon la saison?</label
+          >
+          <label class="label-ar"
+            >6. هل ترى أن مستوى إنتاج مؤسستكم يتغير حسب الموسم؟</label
+          >
+        </div>
+        <div class="radio-container">
+          <div class="custom-radio">
+            <input
+              type="radio"
+              id="seasonYes"
+              formControlName="variaisonSaisoniere"
+              value="true"
+            />
+            <label for="seasonYes">
+              <span class="label-fr">OUI</span>
+              <span class="label-ar">نعم</span>
+            </label>
+          </div>
+          <div class="custom-radio">
+            <input
+              type="radio"
+              id="seasonNo"
+              formControlName="variaisonSaisoniere"
+              value="false"
+            />
+            <label for="seasonNo">
+              <span class="label-fr">NON</span>
+              <span class="label-ar">لا</span>
+            </label>
+          </div>
+        </div>
+        <div class="radio-guide">(encadrer votre réponse)</div>
+      </div>
+    </div>
+
+    <div class="section-header">
+      <div class="title-container">
+        <span class="title-fr">A) ÉVALUATION GÉNÉRALE :</span>
+        <span class="title-ar">أ) تقييم عام :</span>
+      </div>
+    </div>
+
+    <div class="enquete-section">
+      <div class="notice-info">
+        <p class="info-fr">
+          Cette partie est destinée à recueillir votre opinion personnelle sur
+          la situation générale de la branche d'activité de votre entreprise
+        </p>
+        <p class="info-ar">
+          هذا الجزء مخصص لجمع رأيك الشخصي حول الوضع العام لفرع نشاط مؤسستك
+        </p>
+      </div>
+
+      <div class="form-group bilingual">
+        <div class="label-group">
+          <label class="label-fr"
+            >a) Au cours du 1er trimestre 2024, la situation générale de la
+            branche d'activité de votre entreprise était:</label
+          >
+          <label class="label-ar"
+            >أ) خلال الثلاثي الأول من سنة 2024، الوضع العام لفرع نشاط مؤسستك
+            كان:</label
+          >
+        </div>
+        <div class="radio-options">
+          <div class="custom-radio">
+            <input
+              type="radio"
+              id="situationGood"
+              formControlName="situation1erTrimestre"
+              value="bonne"
+            />
+            <label for="situationGood">
+              <span class="label-fr">Bonne</span>
+              <span class="label-ar">جيد</span>
+            </label>
+          </div>
+          <div class="custom-radio">
+            <input
+              type="radio"
+              id="situationAverage"
+              formControlName="situation1erTrimestre"
+              value="moyenne"
+            />
+            <label for="situationAverage">
+              <span class="label-fr">Moyenne</span>
+              <span class="label-ar">متوسط</span>
+            </label>
+          </div>
+          <div class="custom-radio">
+            <input
+              type="radio"
+              id="situationPoor"
+              formControlName="situation1erTrimestre"
+              value="mediocre"
+            />
+            <label for="situationPoor">
+              <span class="label-fr">Médiocre</span>
+              <span class="label-ar">سيء</span>
+            </label>
+          </div>
+        </div>
+        <div class="radio-guide">(encadrer votre réponse)</div>
+      </div>
+
+      <div class="form-group bilingual">
+        <div class="label-group">
+          <label class="label-fr"
+            >b) Au cours du 2ème trimestre 2024, la situation générale de la
+            branche d'activité de votre entreprise était:</label
+          >
+          <label class="label-ar"
+            >ب) خلال الثلاثي الثاني من سنة 2024، الوضع العام لفرع نشاط مؤسستك
+            كان:</label
+          >
+        </div>
+        <div class="radio-options">
+          <div class="custom-radio">
+            <input
+              type="radio"
+              id="situation2Good"
+              formControlName="situation2emeTrimestre"
+              value="bonne"
+            />
+            <label for="situation2Good">
+              <span class="label-fr">Bonne</span>
+              <span class="label-ar">جيد</span>
+            </label>
+          </div>
+          <div class="custom-radio">
+            <input
+              type="radio"
+              id="situation2Average"
+              formControlName="situation2emeTrimestre"
+              value="moyenne"
+            />
+            <label for="situation2Average">
+              <span class="label-fr">Moyenne</span>
+              <span class="label-ar">متوسط</span>
+            </label>
+          </div>
+          <div class="custom-radio">
+            <input
+              type="radio"
+              id="situation2Poor"
+              formControlName="situation2emeTrimestre"
+              value="mediocre"
+            />
+            <label for="situation2Poor">
+              <span class="label-fr">Médiocre</span>
+              <span class="label-ar">سيء</span>
+            </label>
+          </div>
+        </div>
+        <div class="radio-guide">(encadrer votre réponse)</div>
+      </div>
+
+      <div class="form-group bilingual">
+        <div class="label-group">
+          <label class="label-fr"
+            >c) Au cours des 2 à 3 mois à venir, pensez-vous que cette situation
+            va:</label
+          >
+          <label class="label-ar"
+            >ج) خلال الـ 2 إلى 3 أشهر القادمة، هل تعتقد أن هذا الوضع سوف:</label
+          >
+        </div>
+        <div class="radio-options">
+          <div class="custom-radio">
+            <input
+              type="radio"
+              id="situationImprove"
+              formControlName="situationFuture"
+              value="ameliorer"
+            />
+            <label for="situationImprove">
+              <span class="label-fr">S'améliorer</span>
+              <span class="label-ar">يتحسن</span>
+            </label>
+          </div>
+          <div class="custom-radio">
+            <input
+              type="radio"
+              id="situationSame"
+              formControlName="situationFuture"
+              value="meme"
+            />
+            <label for="situationSame">
+              <span class="label-fr">Rester la même</span>
+              <span class="label-ar">يبقى نفسه</span>
+            </label>
+          </div>
+          <div class="custom-radio">
+            <input
+              type="radio"
+              id="situationWorse"
+              formControlName="situationFuture"
+              value="deteriorer"
+            />
+            <label for="situationWorse">
+              <span class="label-fr">Se détériorer</span>
+              <span class="label-ar">يتدهور</span>
+            </label>
+          </div>
         </div>
       </div>
-  
-      <div class="section-header">
-        <div class="title-container">
-          <span class="title-fr">A) ÉVALUATION GÉNÉRALE :</span>
-          <span class="title-ar">أ) تقييم عام :</span>
+    </div>
+    <div class="radio-guide">(encadrer votre réponse)</div>
+    <div class="section-header">
+      <div class="title-container">
+        <span class="title-fr">C) CONDITIONS DE PRODUCTION</span>
+        <span class="title-ar">ج) ظروف الإنتاج</span>
+      </div>
+    </div>
+
+    <div class="enquete-section">
+      <div class="subsection-header">
+        <span class="subtitle-fr">1/ MAIN D'OEUVRE</span>
+        <span class="subtitle-ar">1/ اليد العاملة</span>
+      </div>
+
+      <div class="section-guide fr-guide">Encadrer la flèche qui convient</div>
+
+      <div class="form-group bilingual">
+        <div class="label-group">
+          <label class="label-fr"
+            >Comment évaluez-vous le nombre des effectifs employés par votre
+            entreprise?</label
+          >
+          <label class="label-ar"
+            >كيف تقيّمون تطور عدد العاملين بمؤسستكم؟</label
+          >
+        </div>
+
+        <div class="trend-question bilingual">
+          <div class="trend-label">
+            <span class="label-fr">a) Au cours du 1er trimestre 2024</span>
+            <span class="label-ar">أ) خلال الثلاثي الأول من سنة 2024</span>
+          </div>
+          <div class="trend-arrows">
+            <div class="arrow-option">
+              <input
+                type="radio"
+                id="staff1Up"
+                formControlName="effectifs1erTrimestre"
+                value="up"
+              />
+              <label for="staff1Up" class="arrow-up"
+                ><i class="fas fa-arrow-up"></i
+              ></label>
+            </div>
+            <div class="arrow-option">
+              <input
+                type="radio"
+                id="staff1Same"
+                formControlName="effectifs1erTrimestre"
+                value="same"
+              />
+              <label for="staff1Same" class="arrow-right"
+                ><i class="fas fa-arrow-right"></i
+              ></label>
+            </div>
+            <div class="arrow-option">
+              <input
+                type="radio"
+                id="staff1Down"
+                formControlName="effectifs1erTrimestre"
+                value="down"
+              />
+              <label for="staff1Down" class="arrow-down"
+                ><i class="fas fa-arrow-down"></i
+              ></label>
+            </div>
+          </div>
+        </div>
+
+        <div class="trend-question bilingual">
+          <div class="trend-label">
+            <span class="label-fr">b) Au cours du 2ème trimestre 2024</span>
+            <span class="label-ar">ب) خلال الثلاثي الثاني من سنة 2024</span>
+          </div>
+          <div class="trend-arrows">
+            <div class="arrow-option">
+              <input
+                type="radio"
+                id="staff2Up"
+                formControlName="effectifs2emeTrimestre"
+                value="up"
+              />
+              <label for="staff2Up" class="arrow-up"
+                ><i class="fas fa-arrow-up"></i
+              ></label>
+            </div>
+            <div class="arrow-option">
+              <input
+                type="radio"
+                id="staff2Same"
+                formControlName="effectifs2emeTrimestre"
+                value="same"
+              />
+              <label for="staff2Same" class="arrow-right"
+                ><i class="fas fa-arrow-right"></i
+              ></label>
+            </div>
+            <div class="arrow-option">
+              <input
+                type="radio"
+                id="staff2Down"
+                formControlName="effectifs2emeTrimestre"
+                value="down"
+              />
+              <label for="staff2Down" class="arrow-down"
+                ><i class="fas fa-arrow-down"></i
+              ></label>
+            </div>
+          </div>
+        </div>
+
+        <div class="trend-question bilingual">
+          <div class="trend-label">
+            <span class="label-fr">c) Au cours des trois prochains mois</span>
+            <span class="label-ar">ج) خلال الثلاثة أشهر القادمة</span>
+          </div>
+          <div class="trend-arrows">
+            <div class="arrow-option">
+              <input
+                type="radio"
+                id="staff3Up"
+                formControlName="effectifsFutur"
+                value="up"
+              />
+              <label for="staff3Up" class="arrow-up"
+                ><i class="fas fa-arrow-up"></i
+              ></label>
+            </div>
+            <div class="arrow-option">
+              <input
+                type="radio"
+                id="staff3Same"
+                formControlName="effectifsFutur"
+                value="same"
+              />
+              <label for="staff3Same" class="arrow-right"
+                ><i class="fas fa-arrow-right"></i
+              ></label>
+            </div>
+            <div class="arrow-option">
+              <input
+                type="radio"
+                id="staff3Down"
+                formControlName="effectifsFutur"
+                value="down"
+              />
+              <label for="staff3Down" class="arrow-down"
+                ><i class="fas fa-arrow-down"></i
+              ></label>
+            </div>
+          </div>
         </div>
       </div>
-      
-      <div class="enquete-section">
-        <div class="notice-info">
-          <p class="info-fr">Cette partie est destinée à recueillir votre opinion personnelle sur la situation générale de la branche d'activité de votre entreprise</p>
-          <p class="info-ar">هذا الجزء مخصص لجمع رأيك الشخصي حول الوضع العام لفرع نشاط مؤسستك</p>
+
+      <div class="subsection-header">
+        <span class="subtitle-fr"
+          >2/ TENDANCE DES PRIX DES MATIÈRES PREMIÈRES</span
+        >
+        <span class="subtitle-ar">2/ تطور أسعار المواد الأولية</span>
+      </div>
+
+      <div class="form-group bilingual">
+        <div class="label-group">
+          <label class="label-fr"
+            >Comment évaluez-vous les prix des principales matières premières
+            utilisées dans la branche de votre activité?</label
+          >
+          <label class="label-ar"
+            >كيف تقيمون تطور أسعار المواد الأولية الرئيسية المستعملة في فرع
+            نشاطكم؟</label
+          >
         </div>
-        
-        <div class="form-group bilingual">
-          <div class="label-group">
-            <label class="label-fr">a) Au cours du 1er trimestre 2024, la situation générale de la branche d'activité de votre entreprise était:</label>
-            <label class="label-ar">أ) خلال الثلاثي الأول من سنة 2024، الوضع العام لفرع نشاط مؤسستك كان:</label>
+
+        <div class="trend-question bilingual">
+          <div class="trend-label">
+            <span class="label-fr">a) Au cours du 1er trimestre 2024</span>
+            <span class="label-ar">أ) خلال الثلاثي الأول من سنة 2024</span>
           </div>
-          <div class="radio-options">
-            <div class="custom-radio">
-              <input type="radio" id="situationGood" formControlName="situation1erTrimestre" value="bonne">
-              <label for="situationGood">
-                <span class="label-fr">Bonne</span>
-                <span class="label-ar">جيد</span>
-              </label>
+          <div class="trend-arrows">
+            <div class="arrow-option">
+              <input
+                type="radio"
+                id="price1Up"
+                formControlName="prixMatieres1erTrimestre"
+                value="up"
+              />
+              <label for="price1Up" class="arrow-up"
+                ><i class="fas fa-arrow-up"></i
+              ></label>
             </div>
-            <div class="custom-radio">
-              <input type="radio" id="situationAverage" formControlName="situation1erTrimestre" value="moyenne">
-              <label for="situationAverage">
-                <span class="label-fr">Moyenne</span>
-                <span class="label-ar">متوسط</span>
-              </label>
+            <div class="arrow-option">
+              <input
+                type="radio"
+                id="price1Same"
+                formControlName="prixMatieres1erTrimestre"
+                value="same"
+              />
+              <label for="price1Same" class="arrow-right"
+                ><i class="fas fa-arrow-right"></i
+              ></label>
             </div>
-            <div class="custom-radio">
-              <input type="radio" id="situationPoor" formControlName="situation1erTrimestre" value="mediocre">
-              <label for="situationPoor">
-                <span class="label-fr">Médiocre</span>
-                <span class="label-ar">سيء</span>
-              </label>
+            <div class="arrow-option">
+              <input
+                type="radio"
+                id="price1Down"
+                formControlName="prixMatieres1erTrimestre"
+                value="down"
+              />
+              <label for="price1Down" class="arrow-down"
+                ><i class="fas fa-arrow-down"></i
+              ></label>
             </div>
           </div>
-          <div class="radio-guide">(encadrer votre réponse)</div>
         </div>
-        
-        <div class="form-group bilingual">
-          <div class="label-group">
-            <label class="label-fr">b) Au cours du 2ème trimestre 2024, la situation générale de la branche d'activité de votre entreprise était:</label>
-            <label class="label-ar">ب) خلال الثلاثي الثاني من سنة 2024، الوضع العام لفرع نشاط مؤسستك كان:</label>
+
+        <div class="trend-question bilingual">
+          <div class="trend-label">
+            <span class="label-fr">b) Au cours du 2ème trimestre 2024</span>
+            <span class="label-ar">ب) خلال الثلاثي الثاني من سنة 2024</span>
           </div>
-          <div class="radio-options">
-            <div class="custom-radio">
-              <input type="radio" id="situation2Good" formControlName="situation2emeTrimestre" value="bonne">
-              <label for="situation2Good">
-                <span class="label-fr">Bonne</span>
-                <span class="label-ar">جيد</span>
-              </label>
+          <div class="trend-arrows">
+            <div class="arrow-option">
+              <input
+                type="radio"
+                id="price2Up"
+                formControlName="prixMatieres2emeTrimestre"
+                value="up"
+              />
+              <label for="price2Up" class="arrow-up"
+                ><i class="fas fa-arrow-up"></i
+              ></label>
             </div>
-            <div class="custom-radio">
-              <input type="radio" id="situation2Average" formControlName="situation2emeTrimestre" value="moyenne">
-              <label for="situation2Average">
-                <span class="label-fr">Moyenne</span>
-                <span class="label-ar">متوسط</span>
-              </label>
+            <div class="arrow-option">
+              <input
+                type="radio"
+                id="price2Same"
+                formControlName="prixMatieres2emeTrimestre"
+                value="same"
+              />
+              <label for="price2Same" class="arrow-right"
+                ><i class="fas fa-arrow-right"></i
+              ></label>
             </div>
-            <div class="custom-radio">
-              <input type="radio" id="situation2Poor" formControlName="situation2emeTrimestre" value="mediocre">
-              <label for="situation2Poor">
-                <span class="label-fr">Médiocre</span>
-                <span class="label-ar">سيء</span>
-              </label>
+            <div class="arrow-option">
+              <input
+                type="radio"
+                id="price2Down"
+                formControlName="prixMatieres2emeTrimestre"
+                value="down"
+              />
+              <label for="price2Down" class="arrow-down"
+                ><i class="fas fa-arrow-down"></i
+              ></label>
             </div>
           </div>
-          <div class="radio-guide">(encadrer votre réponse)</div>
         </div>
-        
-        <div class="form-group bilingual">
-          <div class="label-group">
-            <label class="label-fr">c) Au cours des 2 à 3 mois à venir, pensez-vous que cette situation va:</label>
-            <label class="label-ar">ج) خلال الـ 2 إلى 3 أشهر القادمة، هل تعتقد أن هذا الوضع سوف:</label>
+
+        <div class="trend-question bilingual">
+          <div class="trend-label">
+            <span class="label-fr">c) Au cours des trois prochains mois</span>
+            <span class="label-ar">ج) خلال الثلاثة أشهر القادمة</span>
           </div>
-          <div class="radio-options">
-            <div class="custom-radio">
-              <input type="radio" id="situationImprove" formControlName="situationFuture" value="ameliorer">
-              <label for="situationImprove">
-                <span class="label-fr">S'améliorer</span>
-                <span class="label-ar">يتحسن</span>
-              </label>
+          <div class="trend-arrows">
+            <div class="arrow-option">
+              <input
+                type="radio"
+                id="price3Up"
+                formControlName="prixMatieresFutur"
+                value="up"
+              />
+              <label for="price3Up" class="arrow-up"
+                ><i class="fas fa-arrow-up"></i
+              ></label>
             </div>
-            <div class="custom-radio">
-              <input type="radio" id="situationSame" formControlName="situationFuture" value="meme">
-              <label for="situationSame">
-                <span class="label-fr">Rester la même</span>
-                <span class="label-ar">يبقى نفسه</span>
-              </label>
+            <div class="arrow-option">
+              <input
+                type="radio"
+                id="price3Same"
+                formControlName="prixMatieresFutur"
+                value="same"
+              />
+              <label for="price3Same" class="arrow-right"
+                ><i class="fas fa-arrow-right"></i
+              ></label>
             </div>
-            <div class="custom-radio">
-              <input type="radio" id="situationWorse" formControlName="situationFuture" value="deteriorer">
-              <label for="situationWorse">
-                <span class="label-fr">Se détériorer</span>
-                <span class="label-ar">يتدهور</span>
-              </label>
+            <div class="arrow-option">
+              <input
+                type="radio"
+                id="price3Down"
+                formControlName="prixMatieresFutur"
+                value="down"
+              />
+              <label for="price3Down" class="arrow-down"
+                ><i class="fas fa-arrow-down"></i
+              ></label>
             </div>
+          </div>
         </div>
-    </div>
-</div>
-<div class="radio-guide">(encadrer votre réponse)</div>
-<div class="section-header">
-<div class="title-container">
-<span class="title-fr">C) CONDITIONS DE PRODUCTION</span>
-<span class="title-ar">ج) ظروف الإنتاج</span>
-</div>
-</div>
+      </div>
 
-<div class="enquete-section">
-<div class="subsection-header">
-<span class="subtitle-fr">1/ MAIN D'OEUVRE</span>
-<span class="subtitle-ar">1/ اليد العاملة</span>
-</div>
+      <div class="subsection-header">
+        <span class="subtitle-fr">3/ GOULOTS ET DIFFICULTÉS DE PRODUCTION</span>
+        <span class="subtitle-ar">3/ عوائق و صعوبات الإنتاج</span>
+      </div>
 
-<div class="section-guide fr-guide">Encadrer la flèche qui convient</div>
+      <div class="form-group bilingual">
+        <div class="label-group">
+          <label class="label-fr"
+            >a) Votre entreprise tourne-t-elle actuellement à pleine capacité
+            ?</label
+          >
+          <label class="label-ar"
+            >أ) هل مؤسستكم تعمل حاليا بكامل طاقتها الإنتاجية؟</label
+          >
+        </div>
+        <div class="radio-container">
+          <div class="custom-radio">
+            <input
+              type="radio"
+              id="capacityYes"
+              formControlName="pleineCapacite"
+              value="true"
+            />
+            <label for="capacityYes">
+              <span class="label-fr">OUI</span>
+              <span class="label-ar">نعم</span>
+            </label>
+          </div>
+          <div class="custom-radio">
+            <input
+              type="radio"
+              id="capacityNo"
+              formControlName="pleineCapacite"
+              value="false"
+            />
+            <label for="capacityNo">
+              <span class="label-fr">NON</span>
+              <span class="label-ar">لا</span>
+            </label>
+          </div>
+        </div>
+        <div class="radio-guide">(encadrer votre réponse)</div>
+      </div>
 
-<div class="form-group bilingual">
-<div class="label-group">
-  <label class="label-fr">Comment évaluez-vous le nombre des effectifs employés par votre entreprise?</label>
-  <label class="label-ar">كيف تقيّمون تطور عدد العاملين بمؤسستكم؟</label>
-</div>
+      <div class="form-group bilingual">
+        <div class="label-group">
+          <label class="label-fr"
+            >b) Indiquer le taux d'utilisation de la capacité de production de
+            votre entreprise</label
+          >
+          <label class="label-ar"
+            >ب) ما هي نسبة استغلال طاقة الإنتاج بمؤسستكم؟</label
+          >
+        </div>
+        <div class="percent-field">
+          <input
+            type="number"
+            class="form-control"
+            formControlName="tauxUtilisationCapacite"
+            min="0"
+            max="100"
+          />
+          <span class="percent-sign">%</span>
+        </div>
+      </div>
 
-<div class="trend-question bilingual">
-  <div class="trend-label">
-    <span class="label-fr">a) Au cours du 1er trimestre 2024</span>
-    <span class="label-ar">أ) خلال الثلاثي الأول من سنة 2024</span>
-  </div>
-  <div class="trend-arrows">
-    <div class="arrow-option">
-      <input type="radio" id="staff1Up" formControlName="effectifs1erTrimestre" value="up">
-      <label for="staff1Up" class="arrow-up"><i class="fas fa-arrow-up"></i></label>
-    </div>
-    <div class="arrow-option">
-      <input type="radio" id="staff1Same" formControlName="effectifs1erTrimestre" value="same">
-      <label for="staff1Same" class="arrow-right"><i class="fas fa-arrow-right"></i></label>
-    </div>
-    <div class="arrow-option">
-      <input type="radio" id="staff1Down" formControlName="effectifs1erTrimestre" value="down">
-      <label for="staff1Down" class="arrow-down"><i class="fas fa-arrow-down"></i></label>
-    </div>
-  </div>
-</div>
+      <div class="form-group bilingual">
+        <div class="label-group">
+          <label class="label-fr"
+            >c) Avez-vous des difficultés qui freinent actuellement la marche de
+            votre entreprise ?</label
+          >
+          <label class="label-ar"
+            >ج) هل لديكم صعوبات تعيق حاليا سير مؤسستكم؟</label
+          >
+        </div>
+        <div class="radio-container">
+          <div class="custom-radio">
+            <input
+              type="radio"
+              id="difficultyYes"
+              formControlName="avoirDifficultes"
+              value="true"
+            />
+            <label for="difficultyYes">
+              <span class="label-fr">OUI</span>
+              <span class="label-ar">نعم</span>
+            </label>
+          </div>
+          <div class="custom-radio">
+            <input
+              type="radio"
+              id="difficultyNo"
+              formControlName="avoirDifficultes"
+              value="false"
+            />
+            <label for="difficultyNo">
+              <span class="label-fr">NON</span>
+              <span class="label-ar">لا</span>
+            </label>
+          </div>
+        </div>
+        <div class="radio-guide">(encadrer votre réponse)</div>
+      </div>
 
-<div class="trend-question bilingual">
-  <div class="trend-label">
-    <span class="label-fr">b) Au cours du 2ème trimestre 2024</span>
-    <span class="label-ar">ب) خلال الثلاثي الثاني من سنة 2024</span>
-  </div>
-  <div class="trend-arrows">
-    <div class="arrow-option">
-      <input type="radio" id="staff2Up" formControlName="effectifs2emeTrimestre" value="up">
-      <label for="staff2Up" class="arrow-up"><i class="fas fa-arrow-up"></i></label>
-    </div>
-    <div class="arrow-option">
-      <input type="radio" id="staff2Same" formControlName="effectifs2emeTrimestre" value="same">
-      <label for="staff2Same" class="arrow-right"><i class="fas fa-arrow-right"></i></label>
-    </div>
-    <div class="arrow-option">
-      <input type="radio" id="staff2Down" formControlName="effectifs2emeTrimestre" value="down">
-      <label for="staff2Down" class="arrow-down"><i class="fas fa-arrow-down"></i></label>
-    </div>
-  </div>
-</div>
+      <div
+        class="difficultees-section"
+        *ngIf="enqueteForm.get('avoirDifficultes')?.value === 'true'"
+      >
+        <div class="section-guide fr-guide">
+          Si OUI veuillez cocher la (ou les) principale(s) difficulté(s) que
+          vous jugez majeure(s) (au maximum 3 difficultés)
+        </div>
 
-<div class="trend-question bilingual">
-  <div class="trend-label">
-    <span class="label-fr">c) Au cours des trois prochains mois</span>
-    <span class="label-ar">ج) خلال الثلاثة أشهر القادمة</span>
-  </div>
-  <div class="trend-arrows">
-    <div class="arrow-option">
-      <input type="radio" id="staff3Up" formControlName="effectifsFutur" value="up">
-      <label for="staff3Up" class="arrow-up"><i class="fas fa-arrow-up"></i></label>
-    </div>
-    <div class="arrow-option">
-      <input type="radio" id="staff3Same" formControlName="effectifsFutur" value="same">
-      <label for="staff3Same" class="arrow-right"><i class="fas fa-arrow-right"></i></label>
-    </div>
-    <div class="arrow-option">
-      <input type="radio" id="staff3Down" formControlName="effectifsFutur" value="down">
-      <label for="staff3Down" class="arrow-down"><i class="fas fa-arrow-down"></i></label>
-    </div>
-  </div>
-</div>
-</div>
+        <div class="difficulties-grid">
+          <div class="difficulty-item">
+            <input
+              type="checkbox"
+              id="diff1"
+              formControlName="diffApprovisionnement"
+            />
+            <label for="diff1">
+              <span class="label-fr"
+                >Difficultés d'approvisionnement en matières premières</span
+              >
+              <span class="label-ar">صعوبات في توفر المواد الأولية</span>
+            </label>
+          </div>
 
-<div class="subsection-header">
-<span class="subtitle-fr">2/ TENDANCE DES PRIX DES MATIÈRES PREMIÈRES</span>
-<span class="subtitle-ar">2/ تطور أسعار المواد الأولية</span>
-</div>
+          <div class="difficulty-item">
+            <input type="checkbox" id="diff2" formControlName="diffDemande" />
+            <label for="diff2">
+              <span class="label-fr"
+                >Écoulement ou insuffisance de demande</span
+              >
+              <span class="label-ar">ترويج أو قلة الطلب</span>
+            </label>
+          </div>
 
-<div class="form-group bilingual">
-<div class="label-group">
-  <label class="label-fr">Comment évaluez-vous les prix des principales matières premières utilisées dans la branche de votre activité?</label>
-  <label class="label-ar">كيف تقيمون تطور أسعار المواد الأولية الرئيسية المستعملة في فرع نشاطكم؟</label>
-</div>
+          <div class="difficulty-item">
+            <input
+              type="checkbox"
+              id="diff3"
+              formControlName="diffTresorerie"
+            />
+            <label for="diff3">
+              <span class="label-fr">Difficultés de trésorerie</span>
+              <span class="label-ar">صعوبات مالية</span>
+            </label>
+          </div>
 
-<div class="trend-question bilingual">
-  <div class="trend-label">
-    <span class="label-fr">a) Au cours du 1er trimestre 2024</span>
-    <span class="label-ar">أ) خلال الثلاثي الأول من سنة 2024</span>
-  </div>
-  <div class="trend-arrows">
-    <div class="arrow-option">
-      <input type="radio" id="price1Up" formControlName="prixMatieres1erTrimestre" value="up">
-      <label for="price1Up" class="arrow-up"><i class="fas fa-arrow-up"></i></label>
+          <div class="difficulty-item">
+            <input
+              type="checkbox"
+              id="diff4"
+              formControlName="diffEquipement"
+            />
+            <label for="diff4">
+              <span class="label-fr">Insuffisance d'équipement</span>
+              <span class="label-ar">نقص في المعدات</span>
+            </label>
+          </div>
+
+          <div class="difficulty-item">
+            <input type="checkbox" id="diff5" formControlName="diffPieces" />
+            <label for="diff5">
+              <span class="label-fr">Manque de pièces de rechange</span>
+              <span class="label-ar">نقص قطع الغيار</span>
+            </label>
+          </div>
+
+          <div class="difficulty-item">
+            <input type="checkbox" id="diff6" formControlName="diffAutre" />
+            <label for="diff6">
+              <span class="label-fr">Autre à préciser</span>
+              <span class="label-ar">صعوبات أخرى تحدد</span>
+            </label>
+            <input
+              *ngIf="enqueteForm.get('diffAutre')?.value"
+              type="text"
+              class="form-control mt-2"
+              formControlName="diffAutreDetail"
+              placeholder="Précisez..."
+            />
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="arrow-option">
-      <input type="radio" id="price1Same" formControlName="prixMatieres1erTrimestre" value="same">
-      <label for="price1Same" class="arrow-right"><i class="fas fa-arrow-right"></i></label>
+
+    <div class="enqueteur-section"></div>
+
+    <div class="form-actions">
+      <button
+        type="button"
+        class="btn btn-outline-secondary"
+        (click)="onCancel()"
+      >
+        Annuler
+      </button>
+      <button type="submit" class="btn btn-primary">Enregistrer</button>
     </div>
-    <div class="arrow-option">
-      <input type="radio" id="price1Down" formControlName="prixMatieres1erTrimestre" value="down">
-      <label for="price1Down" class="arrow-down"><i class="fas fa-arrow-down"></i></label>
-    </div>
-  </div>
-</div>
+  </form>
 
-<div class="trend-question bilingual">
-  <div class="trend-label">
-    <span class="label-fr">b) Au cours du 2ème trimestre 2024</span>
-    <span class="label-ar">ب) خلال الثلاثي الثاني من سنة 2024</span>
-  </div>
-  <div class="trend-arrows">
-    <div class="arrow-option">
-      <input type="radio" id="price2Up" formControlName="prixMatieres2emeTrimestre" value="up">
-      <label for="price2Up" class="arrow-up"><i class="fas fa-arrow-up"></i></label>
-    </div>
-    <div class="arrow-option">
-      <input type="radio" id="price2Same" formControlName="prixMatieres2emeTrimestre" value="same">
-      <label for="price2Same" class="arrow-right"><i class="fas fa-arrow-right"></i></label>
-    </div>
-    <div class="arrow-option">
-      <input type="radio" id="price2Down" formControlName="prixMatieres2emeTrimestre" value="down">
-      <label for="price2Down" class="arrow-down"><i class="fas fa-arrow-down"></i></label>
-    </div>
+  <div class="enquete-footer">
+    <p>© INS 2024</p>
   </div>
 </div>
-
-<div class="trend-question bilingual">
-  <div class="trend-label">
-    <span class="label-fr">c) Au cours des trois prochains mois</span>
-    <span class="label-ar">ج) خلال الثلاثة أشهر القادمة</span>
-  </div>
-  <div class="trend-arrows">
-    <div class="arrow-option">
-      <input type="radio" id="price3Up" formControlName="prixMatieresFutur" value="up">
-      <label for="price3Up" class="arrow-up"><i class="fas fa-arrow-up"></i></label>
-    </div>
-    <div class="arrow-option">
-      <input type="radio" id="price3Same" formControlName="prixMatieresFutur" value="same">
-      <label for="price3Same" class="arrow-right"><i class="fas fa-arrow-right"></i></label>
-    </div>
-    <div class="arrow-option">
-      <input type="radio" id="price3Down" formControlName="prixMatieresFutur" value="down">
-      <label for="price3Down" class="arrow-down"><i class="fas fa-arrow-down"></i></label>
-    </div>
-  </div>
-</div>
-</div>
-
-<div class="subsection-header">
-<span class="subtitle-fr">3/ GOULOTS ET DIFFICULTÉS DE PRODUCTION</span>
-<span class="subtitle-ar">3/ عوائق و صعوبات الإنتاج</span>
-</div>
-
-<div class="form-group bilingual">
-<div class="label-group">
-  <label class="label-fr">a) Votre entreprise tourne-t-elle actuellement à pleine capacité ?</label>
-  <label class="label-ar">أ) هل مؤسستكم تعمل حاليا بكامل طاقتها الإنتاجية؟</label>
-</div>
-<div class="radio-container">
-  <div class="custom-radio">
-    <input type="radio" id="capacityYes" formControlName="pleineCapacite" value="true">
-    <label for="capacityYes">
-      <span class="label-fr">OUI</span>
-      <span class="label-ar">نعم</span>
-    </label>
-  </div>
-  <div class="custom-radio">
-    <input type="radio" id="capacityNo" formControlName="pleineCapacite" value="false">
-    <label for="capacityNo">
-      <span class="label-fr">NON</span>
-      <span class="label-ar">لا</span>
-    </label>
-  </div>
-</div>
-<div class="radio-guide">(encadrer votre réponse)</div>
-</div>
-
-<div class="form-group bilingual">
-<div class="label-group">
-  <label class="label-fr">b) Indiquer le taux d'utilisation de la capacité de production de votre entreprise</label>
-  <label class="label-ar">ب) ما هي نسبة استغلال طاقة الإنتاج بمؤسستكم؟</label>
-</div>
-<div class="percent-field">
-  <input type="number" class="form-control" formControlName="tauxUtilisationCapacite" min="0" max="100">
-  <span class="percent-sign">%</span>
-</div>
-</div>
-
-<div class="form-group bilingual">
-<div class="label-group">
-  <label class="label-fr">c) Avez-vous des difficultés qui freinent actuellement la marche de votre entreprise ?</label>
-  <label class="label-ar">ج) هل لديكم صعوبات تعيق حاليا سير مؤسستكم؟</label>
-</div>
-<div class="radio-container">
-  <div class="custom-radio">
-    <input type="radio" id="difficultyYes" formControlName="avoirDifficultes" value="true">
-    <label for="difficultyYes">
-      <span class="label-fr">OUI</span>
-      <span class="label-ar">نعم</span>
-    </label>
-  </div>
-  <div class="custom-radio">
-    <input type="radio" id="difficultyNo" formControlName="avoirDifficultes" value="false">
-    <label for="difficultyNo">
-      <span class="label-fr">NON</span>
-      <span class="label-ar">لا</span>
-    </label>
-  </div>
-</div>
-<div class="radio-guide">(encadrer votre réponse)</div>
-</div>
-
-<div class="difficultees-section" *ngIf="enqueteForm.get('avoirDifficultes')?.value === 'true'">
-<div class="section-guide fr-guide">Si OUI veuillez cocher la (ou les) principale(s) difficulté(s) que vous jugez majeure(s) (au maximum 3 difficultés)</div>
-
-<div class="difficulties-grid">
-  <div class="difficulty-item">
-    <input type="checkbox" id="diff1" formControlName="diffApprovisionnement">
-    <label for="diff1">
-      <span class="label-fr">Difficultés d'approvisionnement en matières premières</span>
-      <span class="label-ar">صعوبات في توفر المواد الأولية</span>
-    </label>
-  </div>
-  
-  <div class="difficulty-item">
-    <input type="checkbox" id="diff2" formControlName="diffDemande">
-    <label for="diff2">
-      <span class="label-fr">Écoulement ou insuffisance de demande</span>
-      <span class="label-ar">ترويج أو قلة الطلب</span>
-    </label>
-  </div>
-  
-  <div class="difficulty-item">
-    <input type="checkbox" id="diff3" formControlName="diffTresorerie">
-    <label for="diff3">
-      <span class="label-fr">Difficultés de trésorerie</span>
-      <span class="label-ar">صعوبات مالية</span>
-    </label>
-  </div>
-  
-  <div class="difficulty-item">
-    <input type="checkbox" id="diff4" formControlName="diffEquipement">
-    <label for="diff4">
-      <span class="label-fr">Insuffisance d'équipement</span>
-      <span class="label-ar">نقص في المعدات</span>
-    </label>
-  </div>
-  
-  <div class="difficulty-item">
-    <input type="checkbox" id="diff5" formControlName="diffPieces">
-    <label for="diff5">
-      <span class="label-fr">Manque de pièces de rechange</span>
-      <span class="label-ar">نقص قطع الغيار</span>
-           </label>
-         </div>
-         
-         <div class="difficulty-item">
-           <input type="checkbox" id="diff6" formControlName="diffAutre">
-           <label for="diff6">
-             <span class="label-fr">Autre à préciser</span>
-             <span class="label-ar">صعوبات أخرى تحدد</span>
-           </label>
-           <input *ngIf="enqueteForm.get('diffAutre')?.value" type="text" class="form-control mt-2" formControlName="diffAutreDetail" placeholder="Précisez...">
-         </div>
-       </div>
-     </div>
-   </div>
-   
-   <div class="enqueteur-section">
-     
-   </div>
-
-   <div class="form-actions">
-     <button type="button" class="btn btn-outline-secondary" (click)="onCancel()">Annuler</button>
-     <button type="submit" class="btn btn-primary" >Enregistrer</button>
-   </div>
- </form>
- 
- <div class="enquete-footer">
-   <p>© INS 2024</p>
- </div>
-</div>
-          
